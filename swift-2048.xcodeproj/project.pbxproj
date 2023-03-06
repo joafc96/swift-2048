@@ -20,6 +20,7 @@
 		0B20E0B429ACDE660072CD6E /* MoveAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B20E0B329ACDE660072CD6E /* MoveAction.swift */; };
 		0B20E0B629ACDE700072CD6E /* MoveDirection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B20E0B529ACDE700072CD6E /* MoveDirection.swift */; };
 		0B20E0BE29ACDF200072CD6E /* swift_2048Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B20E0BD29ACDF200072CD6E /* swift_2048Tests.swift */; };
+		0BFED36329B5EDDF0027F5FD /* Int+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BFED36229B5EDDF0027F5FD /* Int+Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		0B20E0B529ACDE700072CD6E /* MoveDirection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoveDirection.swift; sourceTree = "<group>"; };
 		0B20E0BB29ACDF200072CD6E /* swift-2048Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "swift-2048Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0B20E0BD29ACDF200072CD6E /* swift_2048Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = swift_2048Tests.swift; sourceTree = "<group>"; };
+		0BFED36229B5EDDF0027F5FD /* Int+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,6 +92,7 @@
 		0B20E09429ACDDAC0072CD6E /* swift-2048 */ = {
 			isa = PBXGroup;
 			children = (
+				0BFED36029B5EDB80027F5FD /* Utils */,
 				0B20E0AC29ACDE340072CD6E /* Models */,
 				0B20E0A929ACDDBA0072CD6E /* SupportingFiles */,
 				0B20E09929ACDDAC0072CD6E /* ViewController.swift */,
@@ -129,6 +132,22 @@
 				0B20E0BD29ACDF200072CD6E /* swift_2048Tests.swift */,
 			);
 			path = "swift-2048Tests";
+			sourceTree = "<group>";
+		};
+		0BFED36029B5EDB80027F5FD /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				0BFED36129B5EDBD0027F5FD /* Extensions */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		0BFED36129B5EDBD0027F5FD /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				0BFED36229B5EDDF0027F5FD /* Int+Extensions.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -241,6 +260,7 @@
 				0B20E09829ACDDAC0072CD6E /* SceneDelegate.swift in Sources */,
 				0B20E0AB29ACDE0D0072CD6E /* GameEngine.swift in Sources */,
 				0B20E0B029ACDE4F0072CD6E /* Coordinate.swift in Sources */,
+				0BFED36329B5EDDF0027F5FD /* Int+Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

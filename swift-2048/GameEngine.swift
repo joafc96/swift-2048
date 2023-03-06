@@ -7,18 +7,47 @@
 
 import Foundation
 
-class TwoZeroFourEightEngine<T: Evolvable> {
+protocol GameEngineProtocol {
+    associatedtype T: Evolvable
     
+    var board: Array<Array<T?>> { get set }
+    
+    func moveLeft() -> [MoveAction<T>]
+    func moveRight() -> [MoveAction<T>]
+    func moveUp() -> [MoveAction<T>]
+    func moveDown() -> [MoveAction<T>]
+    func spawnNewTileAtRandomCoordinate() -> MoveAction<T>?
+    func printBoard()
+}
+
+
+// T is TileValue as it confirms to the Evolvable protocol
+class GameEngine<T: Evolvable>: GameEngineProtocol {
+    
+    // MARK: - Stored propeties
+    let dimension: Int
+    let threshold: T
     var board: Array<Array<T?>>
-    private let dimension: Int
     
-    init(dimension: Int) {
+    // MARK: - Initializer
+    init(dimension: Int, threshold: T) {
         self.dimension = dimension
         self.board = Array<Array<T?>>(repeating: Array(repeating: nil, count: dimension), count: dimension)
+        self.threshold = threshold
+    }
+    
+    // MARK: - Computed properties
+    private var hasEmptySlot: Bool {
+        for row in 0..<self.dimension {
+            for col in 0..<self.dimension {
+                if self.board[row][col] == nil { return true }
+            }
+        }
+        return false
     }
     
     // MARK: - Left Configurations
-    func moveLeft() {
+    func moveLeft() -> [MoveAction<T>] {
         var actions = [MoveAction<T>]()
         
         for row in 0..<self.dimension {
@@ -42,8 +71,8 @@ class TwoZeroFourEightEngine<T: Evolvable> {
                                                                  currentCoordinate: currentCoordinate,
                                                                  currentEntry: currentEntry) { (moveAction: MoveAction<T>?) in
                                 
-                                if let action = moveAction {
-                                    actions.append(action)
+                                if let moveAction = moveAction {
+                                    actions.append(moveAction)
                                 }
                             }
                             
@@ -94,6 +123,8 @@ class TwoZeroFourEightEngine<T: Evolvable> {
             // Reassign it as nil to start a fresh row
             prevSeenColIndex = nil
         }
+        
+        return actions
     }
     
     private func moveTileAsFarLeftAsPossibleFromCurrent(_ coordinate: Coordinate)  -> MoveAction<T>?
@@ -111,7 +142,7 @@ class TwoZeroFourEightEngine<T: Evolvable> {
         return action
     }
     
-    func getLeftMostCoordinateFrom(_ coordinate: Coordinate) -> Coordinate
+    private func getLeftMostCoordinateFrom(_ coordinate: Coordinate) -> Coordinate
     {
         var leftmostCol = coordinate.y
         let currentRow = coordinate.x
@@ -124,7 +155,7 @@ class TwoZeroFourEightEngine<T: Evolvable> {
     
     
     // MARK: - Right Configurations
-    func moveRight() {
+    func moveRight() -> [MoveAction<T>] {
         var actions = [MoveAction<T>]()
         
         for row in 0..<self.dimension {
@@ -146,8 +177,8 @@ class TwoZeroFourEightEngine<T: Evolvable> {
                                                                  currentCoordinate: currentCoordinate,
                                                                  currentEntry: currentEntry) { (moveAction: MoveAction<T>?) in
                                 
-                                if let action = moveAction {
-                                    actions.append(action)
+                                if let moveAction = moveAction {
+                                    actions.append(moveAction)
                                 }
                             }
                             
@@ -195,6 +226,8 @@ class TwoZeroFourEightEngine<T: Evolvable> {
             // Reassign it as nil to start a fresh row
             prevSeenColIndex = nil
         }
+        
+        return actions
     }
     
     
@@ -213,7 +246,7 @@ class TwoZeroFourEightEngine<T: Evolvable> {
         return action
     }
     
-    func getRightMostCoordinateFrom(_ coordinate: Coordinate) -> Coordinate
+    private func getRightMostCoordinateFrom(_ coordinate: Coordinate) -> Coordinate
     {
         var rightMostCol = coordinate.y
         let currentRow = coordinate.x
@@ -225,7 +258,7 @@ class TwoZeroFourEightEngine<T: Evolvable> {
     }
     
     // MARK: - UP Configurations
-    func moveUp() {
+    func moveUp() -> [MoveAction<T>] {
         var actions = [MoveAction<T>]()
         
         for col in 0..<self.dimension {
@@ -301,6 +334,8 @@ class TwoZeroFourEightEngine<T: Evolvable> {
             // Reassign it as nil to start a fresh row
             prevSeenRowIndex = nil
         }
+        
+        return actions
     }
     
     private func moveTileAsFarTopAsPossibleFromCurrent(_ coordinate: Coordinate)  -> MoveAction<T>?
@@ -318,7 +353,7 @@ class TwoZeroFourEightEngine<T: Evolvable> {
         return action
     }
     
-    func getTopMostCoordinateFrom(_ coordinate: Coordinate) -> Coordinate
+    private func getTopMostCoordinateFrom(_ coordinate: Coordinate) -> Coordinate
     {
         var topMostRow = coordinate.x
         let currentCol = coordinate.y
@@ -330,7 +365,7 @@ class TwoZeroFourEightEngine<T: Evolvable> {
     }
     
     // MARK: - Down Configurations
-    func moveDown() {
+    func moveDown() -> [MoveAction<T>] {
         var actions = [MoveAction<T>]()
         
         for col in 0..<self.dimension {
@@ -405,6 +440,8 @@ class TwoZeroFourEightEngine<T: Evolvable> {
             }
             prevSeenRowIndex = nil
         }
+        
+        return actions
     }
     
     
@@ -423,7 +460,7 @@ class TwoZeroFourEightEngine<T: Evolvable> {
         return action
     }
     
-    func getBottomMostCoordinateFrom(_ coordinate: Coordinate) -> Coordinate
+    private func getBottomMostCoordinateFrom(_ coordinate: Coordinate) -> Coordinate
     {
         var bottomostRow = coordinate.x
         let currentCol = coordinate.y
@@ -432,6 +469,60 @@ class TwoZeroFourEightEngine<T: Evolvable> {
         }
         
         return Coordinate(x: bottomostRow, y: currentCol)
+    }
+    
+    
+    // MARK: - Is Game Over
+    func isGameOver() -> Bool {
+        guard self.hasEmptySlot else { return false }
+        
+        // check if horizontal and vertical move are possible
+        return isVerticalGameOver() && isHorizontalGameOver()
+    }
+    
+    // MARK: - Spawn a new tile at random coordinate
+    func spawnNewTileAtRandomCoordinate() -> MoveAction<T>? {
+        var action: MoveAction<T>? = nil
+
+        // if is not full continue to spawn a tile value
+        guard self.hasEmptySlot else { return action }
+        
+        var emptySlots = [Coordinate]()
+        
+        for row in 0..<self.dimension {
+            for col in 0..<self.dimension {
+                if self.board[row][col] == nil {
+                    emptySlots.append(Coordinate(x: row, y: col))
+                }
+            }
+        }
+        
+        let randomCoordinateIndex = emptySlots.count.arc4random
+        let randomSlot = emptySlots[randomCoordinateIndex]
+        let baseValue = TileValue.getRandomValueOfTwoAndFour() as? T
+        // assign random value of two or four to the randomly selected empty slot
+        self.board[randomSlot.x][randomSlot.y] = baseValue
+        
+        // create a spawn action for the basevalue and random slot
+        action = MoveAction.Spawn(tile: Tile(value: baseValue!, position: randomSlot))
+                
+        return action
+    }
+    
+    // MARK: - Print Board
+    func printBoard() {
+        for row in 0..<self.dimension {
+            var rowString = ""
+            for col in 0..<self.dimension {
+                if let entry = self.board[row][col] {
+                    rowString += "\(entry.score) "
+                } else {
+                    rowString += "- "
+                }
+            }
+            print(rowString)
+            
+        }
     }
     
     
@@ -466,7 +557,6 @@ class TwoZeroFourEightEngine<T: Evolvable> {
         
     }
     
-    
     private func mergeAndUpdateBoardVertically(toCoordinate: Coordinate,
                                                prevCoordinate: Coordinate,
                                                currentCoordinate: Coordinate,
@@ -494,18 +584,24 @@ class TwoZeroFourEightEngine<T: Evolvable> {
         
     }
     
-    func printBoard() {
+    // MARK: - Horizontal & Vertical Game Over Check
+    private func isHorizontalGameOver() -> Bool {
         for row in 0..<self.dimension {
-            var rowString = ""
-            for col in 0..<self.dimension {
-                if let entry = self.board[row][col] {
-                    rowString += "\(entry.score) "
-                } else {
-                    rowString += "- "
-                }
+            for col in 0..<self.dimension - 1 {
+                if self.board[row][col] == self.board[row][col + 1] { return false }
             }
-            print(rowString)
-            
         }
+        
+        return true
+    }
+    
+    private func isVerticalGameOver() -> Bool {
+        for col in 0..<self.dimension {
+            for row in 0..<self.dimension - 1 {
+                if self.board[row][col] == self.board[row + 1][col] { return false }
+            }
+        }
+        
+        return true
     }
 }

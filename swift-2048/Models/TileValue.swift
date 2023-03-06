@@ -11,11 +11,11 @@ protocol Evolvable: Equatable, CustomStringConvertible {
     init(score: Int)
     var score: Int { get }
     func evolve() -> Self?
-    func getBaseValue() -> Self // returns the lowest value i.e Two
+    static func getBaseValue() -> Self // returns the random value  i.e Two
+    static func getRandomValueOfTwoAndFour() -> Self? // returns the random value of Two & Four
 }
 
-
-enum TileValue: Int, Evolvable {
+enum TileValue: Int, CaseIterable, Evolvable {
     case Two                                            = 2
     case Four                                           = 4
     case Eight                                          = 8
@@ -78,8 +78,13 @@ enum TileValue: Int, Evolvable {
         }
     }
     
-    func getBaseValue() -> TileValue {
+    static func getBaseValue() -> Self {
         return TileValue.Two
+    }
+    
+    static func getRandomValueOfTwoAndFour() -> Self? {
+        let randomOfFirstTwoCases = 2.arc4random
+        return TileValue.allCases[randomOfFirstTwoCases]
     }
     
     var score: Int {
