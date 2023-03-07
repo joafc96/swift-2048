@@ -27,3 +27,5 @@ Future Features
 License
 -------
 (c) 2023 Jomon Joshy George. Released under the terms of the MIT license.
+
+2048 by Gabriele Cirulli (http://gabrielecirulli.com/). The original game can be found at http://gabrielecirulli.github.io/2048/, as can all relevant attributions. 
