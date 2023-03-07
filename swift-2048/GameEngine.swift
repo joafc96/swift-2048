@@ -525,7 +525,6 @@ class GameEngine<T: Evolvable>: GameEngineProtocol {
         }
     }
     
-    
     // -------------------------------
     // MARK: Private Helper Methods
     // -------------------------------
