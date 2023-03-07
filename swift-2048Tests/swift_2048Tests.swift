@@ -2,7 +2,7 @@
 //  swift_2048Tests.swift
 //  swift-2048Tests
 //
-//  Created by qbuser on 27/02/23.
+//  Created by joe on 27/02/23.
 //
 
 import XCTest
@@ -98,12 +98,29 @@ final class swift_2048Tests: XCTestCase {
                 
     }
     
+    
     func testRandomSpawn() {
         let firstSpawn = engine.spawnNewTileAtRandomCoordinate()
 
         XCTAssert(firstSpawn != nil)
     }
     
+    func testScore() {
+        var mainScore = 0
+        
+        engine.board[0][0] = TileValue.Two
+        engine.board[0][1] = TileValue.Two
+        engine.board[0][2] = TileValue.Two
+        engine.board[0][3] = TileValue.Two
+        
+        let (score, _) = engine.moveLeft() // score will be 8 (2+2, 2+2)
+        mainScore += score
+        
+        let (newScore, _)  = engine.moveLeft() // score will be 8 (4+4)
+        mainScore += newScore
+
+        XCTAssert(mainScore == 16)
+    }
     
     override func tearDownWithError() throws {
         engine = nil

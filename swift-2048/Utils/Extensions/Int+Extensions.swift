@@ -2,7 +2,7 @@
 //  Int+Extensions.swift
 //  swift-2048
 //
-//  Created by qbuser on 06/03/23.
+//  Created by joe on 06/03/23.
 //
 import Foundation
 

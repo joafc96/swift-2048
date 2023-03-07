@@ -2,7 +2,7 @@
 //  TileValue.swift
 //  swift-2048
 //
-//  Created by qbuser on 27/02/23.
+//  Created by joe on 27/02/23.
 //
 
 import Foundation
@@ -11,8 +11,7 @@ protocol Evolvable: Equatable, CustomStringConvertible {
     init(score: Int)
     var score: Int { get }
     func evolve() -> Self?
-    static func getBaseValue() -> Self // returns the random value  i.e Two
-    static func getRandomValueOfTwoAndFour() -> Self? // returns the random value of Two & Four
+    static func getBaseValue() -> Self // returns the base value i.e Two
 }
 
 enum TileValue: Int, CaseIterable, Evolvable {
@@ -80,11 +79,6 @@ enum TileValue: Int, CaseIterable, Evolvable {
     
     static func getBaseValue() -> Self {
         return TileValue.Two
-    }
-    
-    static func getRandomValueOfTwoAndFour() -> Self? {
-        let randomOfFirstTwoCases = 2.arc4random
-        return TileValue.allCases[randomOfFirstTwoCases]
     }
     
     var score: Int {

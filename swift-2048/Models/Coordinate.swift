@@ -2,7 +2,7 @@
 //  Coordinate.swift
 //  swift-2048
 //
-//  Created by qbuser on 27/02/23.
+//  Created by joe on 27/02/23.
 //
 
 import Foundation

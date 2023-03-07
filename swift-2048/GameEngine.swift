@@ -2,7 +2,7 @@
 //  GameEngine.swift
 //  swift-2048
 //
-//  Created by qbuser on 27/02/23.
+//  Created by joe on 27/02/23.
 //
 
 import Foundation
@@ -12,7 +12,7 @@ protocol GameEngineProtocol {
     
     var board: Array<Array<T?>> { get set }
     
-    func moveLeft() -> [MoveAction<T>]
+    func moveLeft() -> (Int, [MoveAction<T>])
     func moveRight() -> [MoveAction<T>]
     func moveUp() -> [MoveAction<T>]
     func moveDown() -> [MoveAction<T>]
@@ -20,8 +20,37 @@ protocol GameEngineProtocol {
     func printBoard()
 }
 
+/*
+ You get points every time you add identical tiles together.
+ (i.e. 2+2=4, 4+4=8, 8+8=16, etc).
+ - You receive no score for 2 (= 2¹). So a₁ = 0.
+ - You receive score 4 for making a 4 = 2², so a₂ = 4. Note that we assume 4s are not randomly generated.
+ - To make an 8 = 2³, you first need to make two 4s, from which you earn 2 × 4 = 8. Then you receive 8 by making them into an 8. So a₃ = 2 × 4 + 8 = 16.
+ - For 16 = 2⁴, you earn 2 × 16 = 32 for making two 8s and 16 for making the number. So, a₄ = 2 × 16 + 16 = 48.
+ 
+ +----+-------+--------+
+ | n  |  2^n  |  a_n   |
+ +----+-------+--------+
+ |  1 |     2 |      0 |
+ |  2 |     4 |      4 |
+ |  3 |     8 |     16 |
+ |  4 |    16 |     48 |
+ |  5 |    32 |    128 |
+ |  6 |    64 |    320 |
+ |  7 |   128 |    768 |
+ |  8 |   256 |   1792 |
+ |  9 |   512 |   4096 |
+ | 10 |  1024 |   9216 |
+ | 11 |  2048 |  20480 |
+ | 12 |  4096 |  45056 |
+ | 13 |  8192 |  98304 |
+ | 14 | 16384 | 212992 |
+ | 15 | 32768 | 458752 |
+ | 16 | 65536 | 983040 |
+ +----+-------+--------+
+ */
 
-// T is TileValue as it confirms to the Evolvable protocol
+
 class GameEngine<T: Evolvable>: GameEngineProtocol {
     
     // MARK: - Stored propeties
@@ -47,8 +76,9 @@ class GameEngine<T: Evolvable>: GameEngineProtocol {
     }
     
     // MARK: - Left Configurations
-    func moveLeft() -> [MoveAction<T>] {
+    func moveLeft() -> (Int, [MoveAction<T>]) {
         var actions = [MoveAction<T>]()
+        var score = 0
         
         for row in 0..<self.dimension {
             var prevSeenColIndex: Int?
@@ -69,10 +99,15 @@ class GameEngine<T: Evolvable>: GameEngineProtocol {
                             self.mergeAndUpdateBoardHorizontally(toCoordinate: leftmostCoordinate,
                                                                  prevCoordinate: prevValCoordinate,
                                                                  currentCoordinate: currentCoordinate,
-                                                                 currentEntry: currentEntry) { (moveAction: MoveAction<T>?) in
+                                                                 currentEntry: currentEntry) { (moveAction: MoveAction<T>?, evolvedScore: T?) in
                                 
                                 if let moveAction = moveAction {
                                     actions.append(moveAction)
+                                }
+                                
+                                // evolved score is appended to the local score variable
+                                if let evolvedScore = evolvedScore {
+                                    score += evolvedScore.score
                                 }
                             }
                             
@@ -124,7 +159,7 @@ class GameEngine<T: Evolvable>: GameEngineProtocol {
             prevSeenColIndex = nil
         }
         
-        return actions
+        return (score, actions)
     }
     
     private func moveTileAsFarLeftAsPossibleFromCurrent(_ coordinate: Coordinate)  -> MoveAction<T>?
@@ -157,6 +192,7 @@ class GameEngine<T: Evolvable>: GameEngineProtocol {
     // MARK: - Right Configurations
     func moveRight() -> [MoveAction<T>] {
         var actions = [MoveAction<T>]()
+        var score = 0
         
         for row in 0..<self.dimension {
             var prevSeenColIndex: Int?
@@ -175,10 +211,15 @@ class GameEngine<T: Evolvable>: GameEngineProtocol {
                             self.mergeAndUpdateBoardHorizontally(toCoordinate: rightmostCoordinate,
                                                                  prevCoordinate: prevValCoordinate,
                                                                  currentCoordinate: currentCoordinate,
-                                                                 currentEntry: currentEntry) { (moveAction: MoveAction<T>?) in
+                                                                 currentEntry: currentEntry) { (moveAction: MoveAction<T>?, evolvedScore: T?) in
                                 
                                 if let moveAction = moveAction {
                                     actions.append(moveAction)
+                                }
+                                
+                                // evolved score is appended to the local score variable
+                                if let evolvedScore = evolvedScore {
+                                    score += evolvedScore.score
                                 }
                             }
                             
@@ -260,6 +301,7 @@ class GameEngine<T: Evolvable>: GameEngineProtocol {
     // MARK: - UP Configurations
     func moveUp() -> [MoveAction<T>] {
         var actions = [MoveAction<T>]()
+        var score = 0
         
         for col in 0..<self.dimension {
             var prevSeenRowIndex: Int?
@@ -278,10 +320,15 @@ class GameEngine<T: Evolvable>: GameEngineProtocol {
                             self.mergeAndUpdateBoardVertically(toCoordinate: topmostCoordinate,
                                                                prevCoordinate: prevValCoordinate,
                                                                currentCoordinate: currentCoordinate,
-                                                               currentEntry: currentEntry) { (moveAction: MoveAction<T>?) in
+                                                               currentEntry: currentEntry) { (moveAction: MoveAction<T>?, evolvedScore: T?) in
                                 
                                 if let action = moveAction {
                                     actions.append(action)
+                                }
+                                
+                                // evolved score is appended to the local score variable
+                                if let evolvedScore = evolvedScore {
+                                    score += evolvedScore.score
                                 }
                             }
                             
@@ -367,6 +414,7 @@ class GameEngine<T: Evolvable>: GameEngineProtocol {
     // MARK: - Down Configurations
     func moveDown() -> [MoveAction<T>] {
         var actions = [MoveAction<T>]()
+        var score = 0
         
         for col in 0..<self.dimension {
             var prevSeenRowIndex: Int?
@@ -384,10 +432,15 @@ class GameEngine<T: Evolvable>: GameEngineProtocol {
                             self.mergeAndUpdateBoardVertically(toCoordinate: bottommostCoordinate,
                                                                prevCoordinate: prevValCoordinate,
                                                                currentCoordinate: currentCoordinate,
-                                                               currentEntry: currentEntry) { (moveAction: MoveAction<T>?) in
+                                                               currentEntry: currentEntry) { (moveAction: MoveAction<T>?, evolvedScore: T?) in
                                 
                                 if let action = moveAction {
                                     actions.append(action)
+                                }
+                                
+                                // evolved score is appended to the local score variable
+                                if let evolvedScore = evolvedScore {
+                                    score += evolvedScore.score
                                 }
                             }
                             
@@ -499,7 +552,7 @@ class GameEngine<T: Evolvable>: GameEngineProtocol {
         
         let randomCoordinateIndex = emptySlots.count.arc4random
         let randomSlot = emptySlots[randomCoordinateIndex]
-        let baseValue = TileValue.getRandomValueOfTwoAndFour() as? T
+        let baseValue = TileValue.getBaseValue() as? T
         // assign random value of two or four to the randomly selected empty slot
         self.board[randomSlot.x][randomSlot.y] = baseValue
         
@@ -533,7 +586,7 @@ class GameEngine<T: Evolvable>: GameEngineProtocol {
                                                  prevCoordinate: Coordinate,
                                                  currentCoordinate: Coordinate,
                                                  currentEntry: T,
-                                                 completion: (MoveAction<T>?) -> Void)
+                                                 completion: (MoveAction<T>?, T?) -> Void)
     {
         if let evolved = currentEntry.evolve() {
             // Create a MoveAction.Merge that have sources [row][prevCol] and [row][col] and ends up in [row][leftmost]/[row][rightMost]
@@ -541,7 +594,7 @@ class GameEngine<T: Evolvable>: GameEngineProtocol {
             let action = MoveAction.Merge(from: prevCoordinate,
                                           andFrom: currentCoordinate,
                                           toTile: newTile)
-            completion(action)
+            completion(action, evolved)
         }
         
         // Update board
@@ -560,7 +613,7 @@ class GameEngine<T: Evolvable>: GameEngineProtocol {
                                                prevCoordinate: Coordinate,
                                                currentCoordinate: Coordinate,
                                                currentEntry: T,
-                                               completion: (MoveAction<T>?) -> Void)
+                                               completion: (MoveAction<T>?, T?) -> Void)
     {
         if let evolved = currentEntry.evolve() {
             // Create a MoveAction.Merge that have sources [row][prevCol] and [row][col] and ends up in [topmostRow][col]/[downmostRow][col]
@@ -568,7 +621,7 @@ class GameEngine<T: Evolvable>: GameEngineProtocol {
             let action = MoveAction.Merge(from: prevCoordinate,
                                           andFrom: currentCoordinate,
                                           toTile: newTile)
-            completion(action)
+            completion(action, evolved)
         }
         
         // Update board
