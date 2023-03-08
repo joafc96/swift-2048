@@ -10,13 +10,10 @@ import Foundation
 protocol GameEngineProtocol {
     associatedtype T: Evolvable
     
-    var board: Array<Array<T?>> { get set }
+//    var board: Array<Array<T?>> { get set }
     
-    func moveLeft() -> (Int, [MoveAction<T>])
-    func moveRight() -> [MoveAction<T>]
-    func moveUp() -> [MoveAction<T>]
-    func moveDown() -> [MoveAction<T>]
-    func spawnNewTileAtRandomCoordinate() -> MoveAction<T>?
+    func moveInDirection(_ direction: MoveDirection) -> (Int, [MoveAction<T>])
+    func spawnTileAtRandomCoordinate() -> MoveAction<T>?
     func printBoard()
 }
 
@@ -54,9 +51,9 @@ protocol GameEngineProtocol {
 class GameEngine<T: Evolvable>: GameEngineProtocol {
     
     // MARK: - Stored propeties
-    let dimension: Int
-    let threshold: T
-    var board: Array<Array<T?>>
+    private let dimension: Int
+    private let threshold: T
+    private var board: Array<Array<T?>>
     
     // MARK: - Initializer
     init(dimension: Int, threshold: T) {
@@ -75,8 +72,22 @@ class GameEngine<T: Evolvable>: GameEngineProtocol {
         return false
     }
     
+    // MARK: - Move In direction
+    func moveInDirection(_ direction: MoveDirection) ->  (Int, [MoveAction<T>]) {
+        switch direction {
+        case .Up:
+            return moveUp()
+        case .Down:
+            return moveDown()
+        case .Left:
+            return moveLeft()
+        case .Right:
+            return moveRight()
+        }
+    }
+    
     // MARK: - Left Configurations
-    func moveLeft() -> (Int, [MoveAction<T>]) {
+    private func moveLeft() -> (Int, [MoveAction<T>]) {
         var actions = [MoveAction<T>]()
         var score = 0
         
@@ -190,7 +201,7 @@ class GameEngine<T: Evolvable>: GameEngineProtocol {
     
     
     // MARK: - Right Configurations
-    func moveRight() -> [MoveAction<T>] {
+    private func moveRight() -> (Int, [MoveAction<T>]) {
         var actions = [MoveAction<T>]()
         var score = 0
         
@@ -268,7 +279,7 @@ class GameEngine<T: Evolvable>: GameEngineProtocol {
             prevSeenColIndex = nil
         }
         
-        return actions
+        return (score, actions)
     }
     
     
@@ -299,7 +310,7 @@ class GameEngine<T: Evolvable>: GameEngineProtocol {
     }
     
     // MARK: - UP Configurations
-    func moveUp() -> [MoveAction<T>] {
+    private func moveUp() -> (Int, [MoveAction<T>]) {
         var actions = [MoveAction<T>]()
         var score = 0
         
@@ -382,7 +393,7 @@ class GameEngine<T: Evolvable>: GameEngineProtocol {
             prevSeenRowIndex = nil
         }
         
-        return actions
+        return (score, actions)
     }
     
     private func moveTileAsFarTopAsPossibleFromCurrent(_ coordinate: Coordinate)  -> MoveAction<T>?
@@ -412,7 +423,7 @@ class GameEngine<T: Evolvable>: GameEngineProtocol {
     }
     
     // MARK: - Down Configurations
-    func moveDown() -> [MoveAction<T>] {
+    private func moveDown() -> (Int, [MoveAction<T>]) {
         var actions = [MoveAction<T>]()
         var score = 0
         
@@ -494,7 +505,7 @@ class GameEngine<T: Evolvable>: GameEngineProtocol {
             prevSeenRowIndex = nil
         }
         
-        return actions
+        return (score, actions)
     }
     
     
@@ -533,8 +544,8 @@ class GameEngine<T: Evolvable>: GameEngineProtocol {
         return isVerticalGameOver() && isHorizontalGameOver()
     }
     
-    // MARK: - Spawn a new tile at random coordinate
-    func spawnNewTileAtRandomCoordinate() -> MoveAction<T>? {
+    // MARK: - Spawn tile at random coordinate
+    func spawnTileAtRandomCoordinate() -> MoveAction<T>? {
         var action: MoveAction<T>? = nil
 
         // if is not full continue to spawn a tile value

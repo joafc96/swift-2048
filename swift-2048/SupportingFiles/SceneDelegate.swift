@@ -16,7 +16,20 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
-        guard let _ = (scene as? UIWindowScene) else { return }
+        guard let windowScene = (scene as? UIWindowScene) else { return }
+        
+        
+        /* Here HomeVC implements the GameDelegate protocol which has an associated type of T:Evolvable.
+         The typealias T is assigned as TileValue in the HomeVC and when initializing the GameViewModel inside the VC,
+         the VC instance is provided as the type which implements the GameDelegate protocol to the GameViewModel.
+        */
+        
+        let vc = HomeVC(viewModel: GameViewModel<HomeVC>())
+        
+        window = UIWindow(frame: UIScreen.main.bounds)
+        window?.windowScene = windowScene
+        window?.rootViewController = vc
+        window?.makeKeyAndVisible()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
