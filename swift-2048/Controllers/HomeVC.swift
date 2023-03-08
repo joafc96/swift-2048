@@ -2,7 +2,7 @@
 //  HomeVC.swift
 //  swift-2048
 //
-//  Created by qbuser on 08/03/23.
+//  Created by joe on 08/03/23.
 //
 
 import UIKit
@@ -19,6 +19,11 @@ class HomeVC: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+        
+    override func loadView() {
+        
+    }
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,12 +32,6 @@ class HomeVC: UIViewController {
 
         viewModel.delegate = self
         viewModel.startGame()
-        viewModel.moveInDirection(.Right)
-        viewModel.moveInDirection(.Right)
-        viewModel.moveInDirection(.Right)
-        viewModel.moveInDirection(.Right)
-        
-
     }
     
 
@@ -53,6 +52,10 @@ class HomeVC: UIViewController {
 extension HomeVC: GameDelegate {
     // provided typealias for the generic type T in game delegate.
     typealias T = TileValue
+    
+    func gameDidStart() {
+        
+    }
 
     func gameDidProduceActions(actions: [MoveAction<TileValue>]) {
         print(actions)

@@ -11,6 +11,7 @@ import Foundation
 protocol GameDelegate: AnyObject {
     associatedtype T: Evolvable
     
+    func gameDidStart()
     func gameDidProduceActions(actions: [MoveAction<T>])
     func gameDidUpdateValue(score: Int)
     func gameDidUpdateValue(multiplier: Int)
@@ -60,6 +61,10 @@ extension GameViewModel {
     func startGame() {
         let firstSpawnAction = self.engine.spawnTileAtRandomCoordinate()
         let secondSpawnAction = self.engine.spawnTileAtRandomCoordinate()
+        
+        
+        // nofy the game has created 
+        self.delegate?.gameDidStart()
         
         if let firstSpawnAction = firstSpawnAction {
             self.delegate?.gameDidProduceActions(actions: [firstSpawnAction])
