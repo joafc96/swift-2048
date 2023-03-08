@@ -8,10 +8,18 @@
 import UIKit
 
 class GameCollectionViewCell: UICollectionViewCell {
-    static let identifier = "GameCollectionViewCell"
+    
+    private let imageView: UIImageView = {
+        let imgView = UIImageView(frame: .zero)
+        imgView.contentMode = .scaleAspectFill
+        imgView.clipsToBounds = true
+        imgView.image = UIImage(named: "assetImage")
+        return imgView
+    }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        backgroundColor = ColorConstants.cellBG
         commonInit()
     }
     
@@ -25,11 +33,11 @@ class GameCollectionViewCell: UICollectionViewCell {
     }
     
     private func configureSubViews() {
-        
+//        addSubview(imageView)
     }
     
     private func configureConstraints() {
-        
+//        imageView.fillInSuperView()
     }
     
 }

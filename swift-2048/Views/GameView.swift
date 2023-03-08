@@ -8,39 +8,33 @@
 import UIKit
 
 class GameView: UIView {
-    fileprivate let sectionInsets = UIEdgeInsets(top: 8.0, left: 16.0, bottom: 8.0, right: 16.0)
+    private let contentMargin: CGFloat = 20
+    private let cellSpacing: CGFloat = 8
 
-    
     lazy var collectionView: UICollectionView = {
         let flowLayout : UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-        flowLayout.sectionInset = sectionInsets
-        flowLayout.minimumLineSpacing = sectionInsets.left
-        flowLayout.minimumInteritemSpacing = sectionInsets.left
+                
+        flowLayout.minimumLineSpacing = cellSpacing
+        flowLayout.minimumInteritemSpacing = cellSpacing
+        flowLayout.sectionInset = UIEdgeInsets(top: cellSpacing, left: cellSpacing, bottom: cellSpacing, right: cellSpacing)
         
-        let paddingSpace = Int(sectionInsets.left) * 5
-        let availableWidth = Int(UIScreen.main.bounds.width) - paddingSpace
-        let widthPerItem = availableWidth / 4
-        
-        flowLayout.itemSize = CGSize(
-                width: widthPerItem,
-                height: widthPerItem
-            )
         let clnView = UICollectionView(
                 frame: .zero,
                 collectionViewLayout: flowLayout
             )
+        
         clnView.translatesAutoresizingMaskIntoConstraints = false
-        clnView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "GameViewCell")
+        clnView.register(GameCollectionViewCell.self, forCellWithReuseIdentifier: GameCollectionViewCell.nameOfClass)
             
-        clnView.backgroundColor = UIColor(hex: 0xbbada0)
+        clnView.backgroundColor = ColorConstants.gridBG
             
         return clnView
-        
-        
     }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        
+        backgroundColor = ColorConstants.mainBG
         commonInit()
     }
     
@@ -55,10 +49,26 @@ class GameView: UIView {
     
     private func configureSubviews() {
         
+        addSubview(collectionView)
+    
+        
     }
     
     private func configureConstraints() {
         
+        let clnViewConstraints = [
+            // Vertical
+            collectionView.centerYAnchor.constraint(equalTo: centerYAnchor),
+
+            // Horizontal
+            collectionView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: contentMargin),
+            collectionView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -contentMargin),
+            collectionView.heightAnchor.constraint(equalTo: collectionView.widthAnchor),
+            collectionView.centerXAnchor.constraint(equalTo: centerXAnchor),
+        ]
+        
+        NSLayoutConstraint.activate(clnViewConstraints)
+
     }
     
     
