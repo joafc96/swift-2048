@@ -3,6 +3,10 @@ Swift-2048
 
 iOS drop-in library presenting a clean-room Swift/UIKit implementation of the game 2048.
 
+Game logic is written in Swift, the GUI in UIKit. The entire GUI is written in code.
+
+The core is decoupled from the GUI using the protocol delegate pattern, so it is easy to pull the code, extract the core and then build a new GUI around it.
+
 Screenshot
 ----------
 
@@ -26,6 +30,6 @@ Future Features
 
 License
 -------
-(c) 2023 Jomon Joshy George. Released under the terms of the MIT license.
+(c) 2023 Joe George. Released under the terms of the MIT license.
 
 2048 by Gabriele Cirulli (http://gabrielecirulli.com/). The original game can be found at http://gabrielecirulli.github.io/2048/, as can all relevant attributions. 
