@@ -11,22 +11,23 @@ import Foundation
 protocol GameDelegate: AnyObject {
     associatedtype T: Evolvable
     
-    func gameDidStart()
+    func gameDidStart(dimension: Int, totalCount: Int)
     func gameDidProduceActions(actions: [MoveAction<T>])
     func gameDidUpdateValue(score: Int)
     func gameDidUpdateValue(multiplier: Int)
-    func gameIsOver()
+    func gameDidEnd()
 }
 
 // blueprint for the viewmodel class
 //protocol GameViewModelProtocol{
 //    func startGame()
 //    func moveInDirection(_ direction: MoveDirection)
-//}
+//}'
 
 class GameViewModel<Delegate: GameDelegate>  where Delegate.T == TileValue {
     
     private let dimension: Int
+    private let totalCount: Int
     private let threshold: TileValue
     private let engine: GameEngine<TileValue>
     
@@ -44,10 +45,11 @@ class GameViewModel<Delegate: GameDelegate>  where Delegate.T == TileValue {
     
     weak var delegate: Delegate?
     
-    init(dimension: Int = 6, threshold: TileValue = TileValue.TwoThousandAndFourtyEight){
+    init(dimension: Int = 4, threshold: TileValue = TileValue.TwoThousandAndFourtyEight){
         self.dimension = dimension
         self.threshold = threshold
         
+        self.totalCount = dimension * dimension
         self.engine = GameEngine<TileValue>(dimension: dimension, threshold: threshold)
     }
     
@@ -59,12 +61,12 @@ class GameViewModel<Delegate: GameDelegate>  where Delegate.T == TileValue {
 // MARK: - Game Methods
 extension GameViewModel {
     func startGame() {
+        // nofy the game has created
+        self.delegate?.gameDidStart(dimension: self.dimension, totalCount: self.totalCount)
+        
         let firstSpawnAction = self.engine.spawnTileAtRandomCoordinate()
         let secondSpawnAction = self.engine.spawnTileAtRandomCoordinate()
         
-        
-        // nofy the game has created 
-        self.delegate?.gameDidStart()
         
         if let firstSpawnAction = firstSpawnAction {
             self.delegate?.gameDidProduceActions(actions: [firstSpawnAction])
@@ -117,7 +119,7 @@ extension GameViewModel {
         let gameOver: Bool =   self.engine.isGameOver()
         
         if (gameOver) {
-            self.delegate?.gameIsOver()
+            self.delegate?.gameDidEnd()
         }
     }
 }

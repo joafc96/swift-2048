@@ -2,7 +2,7 @@
 //  GameView.swift
 //  swift-2048
 //
-//  Created by qbuser on 08/03/23.
+//  Created by joe on 08/03/23.
 //
 
 import UIKit
@@ -27,6 +27,8 @@ class GameView: UIView {
         clnView.register(GameCollectionViewCell.self, forCellWithReuseIdentifier: GameCollectionViewCell.nameOfClass)
             
         clnView.backgroundColor = ColorConstants.gridBG
+        clnView.layer.cornerRadius = 4
+        clnView.clipsToBounds = true
             
         return clnView
     }()
@@ -48,10 +50,8 @@ class GameView: UIView {
     }
     
     private func configureSubviews() {
-        
         addSubview(collectionView)
     
-        
     }
     
     private func configureConstraints() {
@@ -61,8 +61,9 @@ class GameView: UIView {
             collectionView.centerYAnchor.constraint(equalTo: centerYAnchor),
 
             // Horizontal
-            collectionView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: contentMargin),
-            collectionView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -contentMargin),
+//            collectionView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: contentMargin),
+//            collectionView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -contentMargin),
+            collectionView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.9),
             collectionView.heightAnchor.constraint(equalTo: collectionView.widthAnchor),
             collectionView.centerXAnchor.constraint(equalTo: centerXAnchor),
         ]
@@ -71,8 +72,4 @@ class GameView: UIView {
 
     }
     
-    
-    
-
-
 }

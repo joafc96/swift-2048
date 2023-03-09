@@ -5,12 +5,13 @@
 //  Created by joe on 27/02/23.
 //
 
-import Foundation
+import UIKit
 
 protocol Evolvable: Equatable, CustomStringConvertible {
     init(score: Int)
     var score: Int { get }
     func evolve() -> Self?
+    func getBgColor() -> UIColor
     static func getBaseValue() -> Self // returns the base value i.e Two
 }
 
@@ -37,7 +38,7 @@ enum TileValue: Int, CaseIterable, Evolvable {
         assert(score % 2 == 0, "TileValue.init\(score): you must provide a score value which is divisible by 2")
         self = TileValue(rawValue: score)!
     }
-
+    
     func evolve() -> TileValue? {
         switch self {
         case .Two:
@@ -74,6 +75,45 @@ enum TileValue: Int, CaseIterable, Evolvable {
             return .OneHundredAndThirtyOneThousandAndSeventyTwo
         case .OneHundredAndThirtyOneThousandAndSeventyTwo:
             return nil
+        }
+    }
+    
+    func getBgColor() -> UIColor {
+        switch self {
+        case .Two:
+            return ColorConstants.twoBG
+        case .Four:
+            return ColorConstants.fourBG
+        case .Eight:
+            return ColorConstants.eightBG
+        case .Sixteen:
+            return ColorConstants.sixteenBG
+        case .ThirtyTwo:
+            return ColorConstants.thirtyTwoBG
+        case .SixtyFour:
+            return ColorConstants.thirtyTwoBG
+        case .OneHundredAndTwentyEight:
+            return ColorConstants.thirtyTwoBG
+        case .TwoHundredAndFiftySix:
+            return ColorConstants.thirtyTwoBG
+        case .FiveHundredAndTwelve:
+            return ColorConstants.thirtyTwoBG
+        case .OneThousandAndTwentyFour:
+            return ColorConstants.thirtyTwoBG
+        case .TwoThousandAndFourtyEight:
+            return ColorConstants.thirtyTwoBG
+        case .FourThousandAndNinetySix:
+            return ColorConstants.thirtyTwoBG
+        case .EightThousandOneHundredAndNinetyTwo:
+            return ColorConstants.thirtyTwoBG
+        case .SixteenThousandThreeHundredAndEightyFour:
+            return ColorConstants.thirtyTwoBG
+        case .ThirtyTwoThousandSevenHundredAndSixtyEight:
+            return ColorConstants.thirtyTwoBG
+        case .SixtyFiveThousandFiveHundredAndThirtySix:
+            return ColorConstants.thirtyTwoBG
+        case .OneHundredAndThirtyOneThousandAndSeventyTwo:
+            return ColorConstants.thirtyTwoBG
         }
     }
     

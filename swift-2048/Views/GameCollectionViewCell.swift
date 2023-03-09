@@ -9,22 +9,18 @@ import UIKit
 
 class GameCollectionViewCell: UICollectionViewCell {
     
-    private let imageView: UIImageView = {
-        let imgView = UIImageView(frame: .zero)
-        imgView.contentMode = .scaleAspectFill
-        imgView.clipsToBounds = true
-        imgView.image = UIImage(named: "assetImage")
-        return imgView
-    }()
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = ColorConstants.cellBG
+        layer.cornerRadius = 4
         commonInit()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func layoutSubviews() {
     }
     
     private func commonInit() {
@@ -33,11 +29,9 @@ class GameCollectionViewCell: UICollectionViewCell {
     }
     
     private func configureSubViews() {
-//        addSubview(imageView)
     }
     
     private func configureConstraints() {
-//        imageView.fillInSuperView()
     }
     
 }
