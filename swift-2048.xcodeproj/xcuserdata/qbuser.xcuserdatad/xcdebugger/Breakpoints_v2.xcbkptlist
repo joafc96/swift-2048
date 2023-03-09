@@ -7,16 +7,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "F8B24353-0709-4A90-A182-8F56C55B2775"
+            uuid = "15FA46E0-E39F-4C88-B61A-4482A3A8C810"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "swift-2048/Controllers/GameVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "72"
-            endingLineNumber = "72"
-            landmarkName = "viewDidAppear(_:)"
+            startingLineNumber = "99"
+            endingLineNumber = "99"
+            landmarkName = "gameDidProduceActions(actions:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

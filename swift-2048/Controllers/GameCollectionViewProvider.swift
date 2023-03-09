@@ -13,7 +13,6 @@ protocol GameCollectionViewProviderDelegate: AnyObject {
 
 final class GameCollectionViewProvider: NSObject {
     weak var delegate: GameCollectionViewProviderDelegate?
-    
     var dimension: Int = 0
     
     let animationDuration: Double = 1.0

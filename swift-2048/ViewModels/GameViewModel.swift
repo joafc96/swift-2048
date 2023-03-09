@@ -73,6 +73,24 @@ extension GameViewModel {
         if let secondSpawnAction = secondSpawnAction {
             self.delegate?.gameDidProduceActions(actions: [secondSpawnAction])
         }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: { [weak self] in
+            self?.moveInDirection(.Left)
+
+        })
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: { [weak self] in
+            self?.moveInDirection(.Up)
+
+        })
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: { [weak self] in
+            self?.moveInDirection(.Down)
+
+        })
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0, execute: { [weak self] in
+            self?.moveInDirection(.Right)
+
+        })
     }
     
     func moveInDirection(_ direction: MoveDirection) {

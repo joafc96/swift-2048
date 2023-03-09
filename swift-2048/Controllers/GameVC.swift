@@ -8,16 +8,12 @@
 import UIKit
 
 class GameVC: UIViewController {
-    
     // MARK: - Dependencies
     private var viewModel: GameViewModel<GameVC>
     
     // MARK: - Stored Properties
     private let gameView: GameView = GameView()
     private let gameCollectionViewProvider: GameCollectionViewProvider = GameCollectionViewProvider()
-    
-    let POP_ANIMATION_DURATION = 0.2
-
 
     // MARK: - Initializers
     init(viewModel: GameViewModel<GameVC>) {
@@ -37,6 +33,8 @@ class GameVC: UIViewController {
         super.viewDidLoad()
         
         viewModel.delegate = self
+        gameView.delegate = self
+        
         viewModel.startGame()
     
         configureCollectionViewDelegates()
@@ -51,36 +49,7 @@ class GameVC: UIViewController {
             
             if viewModel.actionsToPerformOnAppearance.count > 0 {
                 print("actionsToPerform")
-                
-                for action in viewModel.actionsToPerformOnAppearance {
-                    
-                    switch action {
-                        
-                    case .Spawn(tile: let tile):
-                        
-                        let indexPath = IndexPath(item: tile.position.x, section: tile.position.y)
-                        let cell = gameView.collectionView.cellForItem(at: indexPath) as? GameCollectionViewCell
-                        
-                        UIView.animate(withDuration: self.POP_ANIMATION_DURATION, delay: 0.0, options: [.curveEaseOut] ,  animations: {
-                            cell?.backgroundColor = tile.value.getBgColor()
-                            cell?.transform = CGAffineTransform(scaleX: 1.15, y: 1.15)
-                        }, completion: { _ in
-                            cell?.transform = .identity
-                            
-                        })
-                        
-                        break
-                    case .Move(from: let from, to: let to):
-                        break
-                    case .Merge(from: let from, andFrom: let andFrom, toTile: let toTile):
-                        break
-                    }
-                    
-                    
-                }
-                
-                
-//                self.gameBoardScene?.performMoveActions(actionsToPerformOnAppearance)
+                self.gameView.performMoveActions(actions: viewModel.actionsToPerformOnAppearance)
             }
         } else {
             print("Second Time")
@@ -98,8 +67,8 @@ extension GameVC: GameCollectionViewProviderDelegate {
     private func configureCollectionViewDelegates() {
         gameCollectionViewProvider.delegate = self
         
-        gameView.collectionView.dataSource = gameCollectionViewProvider
-        gameView.collectionView.delegate = gameCollectionViewProvider
+        gameView.boardView.dataSource = gameCollectionViewProvider
+        gameView.boardView.delegate = gameCollectionViewProvider
     }
     
     func didSelectCell(_ provider: GameCollectionViewProvider, withIndex index: Int) {
@@ -116,19 +85,18 @@ extension GameVC: GameDelegate {
     
     func gameDidStart(dimension: Int) {
         gameCollectionViewProvider.dimension = dimension
-        gameView.collectionView.reloadData()
+        gameView.boardView.reloadData()
     }
     
     
     func gameDidProduceActions(actions: [MoveAction<TileValue>]) {
         if (viewModel.viewHasAppeared) {
-            
+            gameView.performMoveActions(actions: actions)
         } else {
             for action in actions {
                 viewModel.actionsToPerformOnAppearance.append(action)
             }
         }
-    
     }
     
     func gameDidUpdateValue(score: Int) {
@@ -141,6 +109,14 @@ extension GameVC: GameDelegate {
     }
     
     func gameDidEnd() {
+        
+    }
+}
+
+
+// MARK: - GameViewDelegate
+extension GameVC: GameViewDelegate {
+    func boardViewDidFinishAnimating() {
         
     }
 }
