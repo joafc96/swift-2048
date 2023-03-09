@@ -23,14 +23,15 @@ final class GameCollectionViewProvider: NSObject {
     }
 }
 
-extension GameCollectionViewProvider: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    
+
+// MARK: - UICollectionViewDataSource
+extension GameCollectionViewProvider: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return dimension
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return dimension 
+        return dimension
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -39,8 +40,10 @@ extension GameCollectionViewProvider: UICollectionViewDataSource, UICollectionVi
         cell.alpha = 0
         return cell
     }
-    
-    
+}
+
+// MARK: - UICollectionViewDelegateFlowLayout
+extension GameCollectionViewProvider: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         let noOfCellsInRow = dimension  //number of column you want according to total count
@@ -60,7 +63,6 @@ extension GameCollectionViewProvider: UICollectionViewDataSource, UICollectionVi
         })
     }
 }
-
 
 // MARK: - UICollectionViewDelegate
 extension GameCollectionViewProvider: UICollectionViewDelegate {

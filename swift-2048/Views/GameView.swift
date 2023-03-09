@@ -41,6 +41,28 @@ class GameView: UIView {
         return clnView
     }()
     
+    lazy var descriptionLabel: UILabel = {
+        let lbl = UILabel()
+        lbl.translatesAutoresizingMaskIntoConstraints = false
+        
+        let attributedText = NSMutableAttributedString(string: "Join the tiles, get to ", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17), NSAttributedString.Key.foregroundColor: ColorConstants.cellBG])
+        
+        attributedText.append(NSAttributedString(string: "2048!", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20), NSAttributedString.Key.foregroundColor: ColorConstants.cellBG]))
+        
+        lbl.attributedText = attributedText
+        
+        return lbl
+    }()
+    
+    lazy var titleLabel: UILabel = {
+        let lbl = UILabel()
+        lbl.translatesAutoresizingMaskIntoConstraints = false
+        lbl.font = UIFont.systemFont(ofSize: 34, weight: UIFont.Weight.bold)
+        lbl.textColor = ColorConstants.cellBG
+        lbl.text = "2048"
+        return lbl
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -58,24 +80,54 @@ class GameView: UIView {
     }
     
     private func configureSubviews() {
+        addSubview(titleLabel)
+        addSubview(descriptionLabel)
         addSubview(boardView)
         
     }
     
     private func configureConstraints() {
+        
+        let titleConstraints = [
+            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
+            titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
+
+            titleLabel.bottomAnchor.constraint(equalTo: descriptionLabel.topAnchor, constant: -8)
+        ]
+        
+        let descConstraints = [
+            descriptionLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
+            descriptionLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
+
+            descriptionLabel.bottomAnchor.constraint(equalTo: boardView.topAnchor, constant: -16)
+        ]
+        
+        
         let clnViewConstraints = [
             // Vertical
             boardView.centerYAnchor.constraint(equalTo: centerYAnchor),
             
             // Horizontal
-            boardView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.9),
+            boardView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
+            boardView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
             boardView.heightAnchor.constraint(equalTo: boardView.widthAnchor),
             boardView.centerXAnchor.constraint(equalTo: centerXAnchor),
         ]
         
+        NSLayoutConstraint.activate(titleConstraints)
+        NSLayoutConstraint.activate(descConstraints)
         NSLayoutConstraint.activate(clnViewConstraints)
+
+
+
         
     }
+    
+}
+
+
+// MARK: - Move Actions
+extension GameView {
     
     // MARK: - Perform Move Actions
     func performMoveActions(actions: [MoveAction<D>]) {

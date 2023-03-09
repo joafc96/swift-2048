@@ -93,27 +93,27 @@ enum TileValue: Int, CaseIterable, Evolvable {
         case .SixtyFour:
             return ColorConstants.sixtyFourBG
         case .OneHundredAndTwentyEight:
-            return ColorConstants.oneTwentyEightBG
+            return ColorConstants.oneHundredAndTwentyEightBG
         case .TwoHundredAndFiftySix:
-            return ColorConstants.thirtyTwoBG
+            return ColorConstants.twoHundredAndFiftySizBG
         case .FiveHundredAndTwelve:
-            return ColorConstants.thirtyTwoBG
+            return ColorConstants.fiveHundredAndTwelveBG
         case .OneThousandAndTwentyFour:
-            return ColorConstants.thirtyTwoBG
+            return ColorConstants.oneThousandAndTwentyFourBG
         case .TwoThousandAndFourtyEight:
-            return ColorConstants.thirtyTwoBG
+            return ColorConstants.twoThousandAndFourtyEightBG
         case .FourThousandAndNinetySix:
-            return ColorConstants.thirtyTwoBG
+            return ColorConstants.cellBG
         case .EightThousandOneHundredAndNinetyTwo:
-            return ColorConstants.thirtyTwoBG
+            return ColorConstants.cellBG
         case .SixteenThousandThreeHundredAndEightyFour:
-            return ColorConstants.thirtyTwoBG
+            return ColorConstants.cellBG
         case .ThirtyTwoThousandSevenHundredAndSixtyEight:
-            return ColorConstants.thirtyTwoBG
+            return ColorConstants.cellBG
         case .SixtyFiveThousandFiveHundredAndThirtySix:
-            return ColorConstants.thirtyTwoBG
+            return ColorConstants.cellBG
         case .OneHundredAndThirtyOneThousandAndSeventyTwo:
-            return ColorConstants.thirtyTwoBG
+            return ColorConstants.cellBG
         }
     }
     

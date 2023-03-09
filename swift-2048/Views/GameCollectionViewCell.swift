@@ -13,8 +13,12 @@ class GameCollectionViewCell: UICollectionViewCell {
         let lbl = UILabel()
         lbl.translatesAutoresizingMaskIntoConstraints = false
         lbl.font = UIFont.systemFont(ofSize: 32, weight: UIFont.Weight.bold)
-        lbl.textColor = UIColor(hex: 0x776e65)
-
+        lbl.textColor = ColorConstants.textDark
+        lbl.minimumScaleFactor = 0.4
+        lbl.adjustsFontSizeToFitWidth = true
+        lbl.textAlignment = .center
+        lbl.clipsToBounds = true
+        
         return lbl
     }()
     
@@ -44,6 +48,8 @@ class GameCollectionViewCell: UICollectionViewCell {
     private func configureConstraints() {
         
         let scoreLblConstraints = [
+            scoreLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 4),
+            scoreLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -4),
             scoreLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
             scoreLabel.centerYAnchor.constraint(equalTo: centerYAnchor)
         ]
