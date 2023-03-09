@@ -91,9 +91,9 @@ enum TileValue: Int, CaseIterable, Evolvable {
         case .ThirtyTwo:
             return ColorConstants.thirtyTwoBG
         case .SixtyFour:
-            return ColorConstants.thirtyTwoBG
+            return ColorConstants.sixtyFourBG
         case .OneHundredAndTwentyEight:
-            return ColorConstants.thirtyTwoBG
+            return ColorConstants.oneTwentyEightBG
         case .TwoHundredAndFiftySix:
             return ColorConstants.thirtyTwoBG
         case .FiveHundredAndTwelve:

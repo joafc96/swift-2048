@@ -62,7 +62,7 @@ class GameVC: UIViewController {
                         let cell = gameView.collectionView.cellForItem(at: indexPath) as? GameCollectionViewCell
                         
                         UIView.animate(withDuration: self.POP_ANIMATION_DURATION, delay: 0.0, options: [.curveEaseOut] ,  animations: {
-                            cell?.backgroundColor = ColorConstants.fourBG
+                            cell?.backgroundColor = tile.value.getBgColor()
                             cell?.transform = CGAffineTransform(scaleX: 1.15, y: 1.15)
                         }, completion: { _ in
                             cell?.transform = .identity

@@ -61,8 +61,6 @@ class GameView: UIView {
             collectionView.centerYAnchor.constraint(equalTo: centerYAnchor),
 
             // Horizontal
-//            collectionView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: contentMargin),
-//            collectionView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -contentMargin),
             collectionView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.9),
             collectionView.heightAnchor.constraint(equalTo: collectionView.widthAnchor),
             collectionView.centerXAnchor.constraint(equalTo: centerXAnchor),

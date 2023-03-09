@@ -18,11 +18,6 @@ protocol GameDelegate: AnyObject {
     func gameDidEnd()
 }
 
-// blueprint for the viewmodel class
-//protocol GameViewModelProtocol{
-//    func startGame()
-//    func moveInDirection(_ direction: MoveDirection)
-//}'
 
 class GameViewModel<Delegate: GameDelegate>  where Delegate.T == TileValue {
     typealias D = TileValue
