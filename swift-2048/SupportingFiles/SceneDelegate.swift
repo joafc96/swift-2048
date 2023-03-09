@@ -24,7 +24,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
          the VC instance is provided as the type which implements the GameDelegate protocol to the GameViewModel.
         */
         
-        let vc = HomeVC(viewModel: GameViewModel<HomeVC>())
+        let vc = GameVC(viewModel: GameViewModel<GameVC>())
         
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.windowScene = windowScene

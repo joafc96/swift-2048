@@ -16,7 +16,7 @@ class GameView: UIView {
                 
         flowLayout.minimumLineSpacing = cellSpacing
         flowLayout.minimumInteritemSpacing = cellSpacing
-        flowLayout.sectionInset = UIEdgeInsets(top: cellSpacing, left: cellSpacing, bottom: cellSpacing, right: cellSpacing)
+        flowLayout.sectionInset = UIEdgeInsets(top: cellSpacing, left: cellSpacing, bottom: 0, right: cellSpacing)
         
         let clnView = UICollectionView(
                 frame: .zero,

@@ -15,7 +15,9 @@ final class GameCollectionViewProvider: NSObject {
     weak var delegate: GameCollectionViewProviderDelegate?
     
     var dimension: Int = 0
-    var totalCount: Int = 0
+    
+    let animationDuration: Double = 1.0
+    let delayBase: Double = 1.0
     
     deinit {
         print("GameCollectionViewProvider deinit")
@@ -23,14 +25,22 @@ final class GameCollectionViewProvider: NSObject {
 }
 
 extension GameCollectionViewProvider: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return dimension
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return totalCount
+        return dimension 
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GameCollectionViewCell.nameOfClass, for: indexPath) as! GameCollectionViewCell
+        
+        cell.alpha = 0
         return cell
     }
+    
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
@@ -42,6 +52,13 @@ extension GameCollectionViewProvider: UICollectionViewDataSource, UICollectionVi
         
         let size = Int((collectionView.bounds.width - totalPaddingSpace) / CGFloat(noOfCellsInRow))
         return CGSize(width: size, height: size)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        let delay = sqrt(Double(indexPath.row)) * delayBase
+        UIView.animate(withDuration: animationDuration, delay: delay, options: .curveEaseOut, animations: {
+          cell.alpha = 1
+        })
     }
 }
 

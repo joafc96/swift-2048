@@ -11,7 +11,7 @@ import Foundation
 protocol GameDelegate: AnyObject {
     associatedtype T: Evolvable
     
-    func gameDidStart(dimension: Int, totalCount: Int)
+    func gameDidStart(dimension: Int)
     func gameDidProduceActions(actions: [MoveAction<T>])
     func gameDidUpdateValue(score: Int)
     func gameDidUpdateValue(multiplier: Int)
@@ -25,11 +25,11 @@ protocol GameDelegate: AnyObject {
 //}'
 
 class GameViewModel<Delegate: GameDelegate>  where Delegate.T == TileValue {
-    
+    typealias D = TileValue
+
     private let dimension: Int
-    private let totalCount: Int
-    private let threshold: TileValue
-    private let engine: GameEngine<TileValue>
+    private let threshold: D
+    private let engine: GameEngine<D>
     
     private(set) var score: Int = 0 {
         didSet {
@@ -44,13 +44,16 @@ class GameViewModel<Delegate: GameDelegate>  where Delegate.T == TileValue {
     }
     
     weak var delegate: Delegate?
-    
-    init(dimension: Int = 4, threshold: TileValue = TileValue.TwoThousandAndFourtyEight){
+    var viewHasAppeared: Bool = false
+    var initialGameStateActions = [MoveAction<D>]()
+    var actionsToPerformOnAppearance = [MoveAction<D>]()
+
+
+    init(dimension: Int = 4, threshold: D = TileValue.TwoThousandAndFourtyEight){
         self.dimension = dimension
         self.threshold = threshold
         
-        self.totalCount = dimension * dimension
-        self.engine = GameEngine<TileValue>(dimension: dimension, threshold: threshold)
+        self.engine = GameEngine<D>(dimension: dimension, threshold: threshold)
     }
     
     deinit {
@@ -62,7 +65,7 @@ class GameViewModel<Delegate: GameDelegate>  where Delegate.T == TileValue {
 extension GameViewModel {
     func startGame() {
         // nofy the game has created
-        self.delegate?.gameDidStart(dimension: self.dimension, totalCount: self.totalCount)
+        self.delegate?.gameDidStart(dimension: self.dimension)
         
         let firstSpawnAction = self.engine.spawnTileAtRandomCoordinate()
         let secondSpawnAction = self.engine.spawnTileAtRandomCoordinate()
