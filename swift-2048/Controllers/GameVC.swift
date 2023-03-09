@@ -46,9 +46,7 @@ class GameVC: UIViewController {
         if viewModel.viewHasAppeared == false {
             viewModel.viewHasAppeared = true
             print("First Time")
-            
             if viewModel.actionsToPerformOnAppearance.count > 0 {
-                print("actionsToPerform")
                 self.gameView.performMoveActions(actions: viewModel.actionsToPerformOnAppearance)
             }
         } else {
@@ -100,11 +98,11 @@ extension GameVC: GameDelegate {
     }
     
     func gameDidUpdateValue(score: Int) {
-        print("score: \(score)")
+//        print("score: \(score)")
     }
     
     func gameDidUpdateValue(multiplier: Int) {
-        print("mergeMultiplier: \(multiplier)")
+//        print("mergeMultiplier: \(multiplier)")
         
     }
     
@@ -117,6 +115,7 @@ extension GameVC: GameDelegate {
 // MARK: - GameViewDelegate
 extension GameVC: GameViewDelegate {
     func boardViewDidFinishAnimating() {
+        print("didFinishAnimating")
         
     }
 }

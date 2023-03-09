@@ -74,22 +74,35 @@ extension GameViewModel {
             self.delegate?.gameDidProduceActions(actions: [secondSpawnAction])
         }
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: { [weak self] in
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6, execute: { [weak self] in
             self?.moveInDirection(.Left)
-
         })
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: { [weak self] in
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.2, execute: { [weak self] in
             self?.moveInDirection(.Up)
-
         })
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: { [weak self] in
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.8, execute: { [weak self] in
             self?.moveInDirection(.Down)
-
         })
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0, execute: { [weak self] in
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.4, execute: { [weak self] in
             self?.moveInDirection(.Right)
-
+        })
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0, execute: { [weak self] in
+            self?.moveInDirection(.Left)
+        })
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3.6, execute: { [weak self] in
+            self?.moveInDirection(.Down)
+        })
+        DispatchQueue.main.asyncAfter(deadline: .now() + 4.2, execute: { [weak self] in
+            self?.moveInDirection(.Up)
+        })
+        DispatchQueue.main.asyncAfter(deadline: .now() + 4.8, execute: { [weak self] in
+            self?.moveInDirection(.Right)
+        })
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5.4, execute: { [weak self] in
+            self?.moveInDirection(.Down)
+        })
+        DispatchQueue.main.asyncAfter(deadline: .now() + 6.0, execute: { [weak self] in
+            self?.moveInDirection(.Up)
         })
     }
     

@@ -9,6 +9,15 @@ import UIKit
 
 class GameCollectionViewCell: UICollectionViewCell {
     
+    lazy var scoreLabel: UILabel = {
+        let lbl = UILabel()
+        lbl.translatesAutoresizingMaskIntoConstraints = false
+        lbl.font = UIFont.systemFont(ofSize: 32, weight: UIFont.Weight.bold)
+        lbl.textColor = UIColor(hex: 0x776e65)
+
+        return lbl
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = ColorConstants.cellBG
@@ -29,9 +38,19 @@ class GameCollectionViewCell: UICollectionViewCell {
     }
     
     private func configureSubViews() {
+        addSubview(scoreLabel)
     }
     
     private func configureConstraints() {
+        
+        let scoreLblConstraints = [
+            scoreLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
+            scoreLabel.centerYAnchor.constraint(equalTo: centerYAnchor)
+        ]
+        
+        NSLayoutConstraint.activate(scoreLblConstraints)
+        
+        
     }
     
 }

@@ -7,16 +7,6 @@
 
 import Foundation
 
-protocol GameEngineProtocol {
-    associatedtype T: Evolvable
-    
-//    var board: Array<Array<T?>> { get set }
-    
-    func moveInDirection(_ direction: MoveDirection) -> (Int, [MoveAction<T>])
-    func spawnTileAtRandomCoordinate() -> MoveAction<T>?
-    func printBoard()
-}
-
 /*
  You get points every time you add identical tiles together.
  (i.e. 2+2=4, 4+4=8, 8+8=16, etc).
@@ -48,7 +38,7 @@ protocol GameEngineProtocol {
  */
 
 
-class GameEngine<T: Evolvable>: GameEngineProtocol {
+class GameEngine<T: Evolvable> {
     
     // MARK: - Stored propeties
     private let dimension: Int
