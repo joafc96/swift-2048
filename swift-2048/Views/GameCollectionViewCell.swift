@@ -13,7 +13,7 @@ class GameCollectionViewCell: UICollectionViewCell {
         let lbl = UILabel()
         lbl.translatesAutoresizingMaskIntoConstraints = false
         lbl.font = UIFont.systemFont(ofSize: 32, weight: UIFont.Weight.bold)
-        lbl.textColor = ColorConstants.textDark
+        lbl.textColor = UIColor(named: "cell")
         lbl.minimumScaleFactor = 0.4
         lbl.adjustsFontSizeToFitWidth = true
         lbl.textAlignment = .center
@@ -24,7 +24,7 @@ class GameCollectionViewCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = ColorConstants.cellBG
+        backgroundColor =  UIColor(named: "cell")
         layer.cornerRadius = 4
         commonInit()
     }
@@ -55,8 +55,5 @@ class GameCollectionViewCell: UICollectionViewCell {
         ]
         
         NSLayoutConstraint.activate(scoreLblConstraints)
-        
-        
     }
-    
 }

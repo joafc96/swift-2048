@@ -98,12 +98,11 @@ extension GameVC: GameDelegate {
     }
     
     func gameDidUpdateValue(score: Int) {
-//        print("score: \(score)")
+        gameView.updateScore(score: score)
     }
     
     func gameDidUpdateValue(multiplier: Int) {
-//        print("mergeMultiplier: \(multiplier)")
-        
+        gameView.updateMultiplier(multiplier: multiplier)
     }
     
     func gameDidEnd() {

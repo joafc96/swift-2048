@@ -19,6 +19,133 @@ class GameView: UIView {
     
     weak var delegate: GameViewDelegate?
     
+    
+    lazy var titleLabel: UILabel = {
+        let lbl = UILabel()
+        lbl.translatesAutoresizingMaskIntoConstraints = false
+        lbl.font = UIFont.systemFont(ofSize: 40, weight: UIFont.Weight.bold)
+        lbl.textColor = UIColor(named: "label")
+        lbl.text = "2048"
+        return lbl
+    }()
+    
+    
+    lazy var descriptionLabel: UILabel = {
+        let lbl = UILabel()
+        lbl.translatesAutoresizingMaskIntoConstraints = false
+        
+        let attributedText = NSMutableAttributedString(string: "Join the tiles, get to ", attributes: [
+            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17, weight: .light),
+            NSAttributedString.Key.foregroundColor: UIColor(named: "label")!,
+        ])
+        
+        attributedText.append(NSAttributedString(string: "2048!", attributes: [
+            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20, weight: .bold),
+            NSAttributedString.Key.foregroundColor: UIColor(named: "label")!,
+        ]))
+        
+        lbl.attributedText = attributedText
+        
+        return lbl
+    }()
+    
+    lazy var scoreLabel: UILabel = {
+        let lbl = UILabel()
+        lbl.translatesAutoresizingMaskIntoConstraints = false
+        lbl.font = UIFont.systemFont(ofSize: 34, weight: UIFont.Weight.bold)
+        lbl.textColor = UIColor(named: "label")
+        lbl.textAlignment = .right
+        lbl.text = "0"
+        
+        return lbl
+    }()
+    
+    lazy var multiplierLabel: UILabel = {
+        let lbl = UILabel()
+        lbl.translatesAutoresizingMaskIntoConstraints = false
+        lbl.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.medium)
+        lbl.textColor = UIColor(named: "label")
+        lbl.textAlignment = .right
+        lbl.text = "x0"
+        
+        return lbl
+    }()
+    
+    lazy var statStackView: UIStackView = {
+        let stkView = UIStackView()
+        stkView.translatesAutoresizingMaskIntoConstraints = false
+        stkView.axis = .horizontal
+        stkView.alignment = .top
+        
+        return stkView
+    }()
+    
+    
+    lazy var howToPlayLabel: UILabel = {
+        let lbl = UILabel()
+        lbl.translatesAutoresizingMaskIntoConstraints = false
+        lbl.numberOfLines = 5
+        
+        let attributedText = NSMutableAttributedString(string: "swipe", attributes: [
+            NSAttributedString.Key.foregroundColor: UIColor(named: "label")!,
+            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20, weight: .bold),
+        ])
+        
+        attributedText.append(NSAttributedString(string: " to move the tiles", attributes: [
+            NSAttributedString.Key.foregroundColor:  UIColor(named: "label")!,
+            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17, weight: .light),
+        ]))
+        
+//        let attributedText = NSMutableAttributedString(string: "HOW TO PLAY: ", attributes: [
+//            NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20),
+//            NSAttributedString.Key.foregroundColor: ColorConstants.tertiary,
+//        ])
+//
+//        attributedText.append(NSAttributedString(string: "Use your ", attributes: [
+//            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17),
+//            NSAttributedString.Key.foregroundColor: ColorConstants.tertiary,
+//        ]))
+//
+//        attributedText.append(NSAttributedString(string: "arrow keys ", attributes: [
+//            NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20),
+//            NSAttributedString.Key.foregroundColor: ColorConstants.tertiary,
+//        ]))
+//
+//        attributedText.append(NSAttributedString(string: "to move the tiles. ", attributes: [
+//            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17),
+//            NSAttributedString.Key.foregroundColor: ColorConstants.tertiary,
+//        ]))
+//
+//        attributedText.append(NSAttributedString(string: "Tiles with the same number ", attributes: [
+//            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17),
+//            NSAttributedString.Key.foregroundColor: ColorConstants.tertiary,
+//        ]))
+//
+//        attributedText.append(NSAttributedString(string: "merge into one ", attributes: [
+//            NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20),
+//            NSAttributedString.Key.foregroundColor: ColorConstants.tertiary,
+//        ]))
+//
+//        attributedText.append(NSAttributedString(string: "when they touch. ", attributes: [
+//            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17),
+//            NSAttributedString.Key.foregroundColor: ColorConstants.tertiary,
+//        ]))
+//
+//        attributedText.append(NSAttributedString(string: "Add them up to reach ", attributes: [
+//            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17),
+//            NSAttributedString.Key.foregroundColor: ColorConstants.tertiary,
+//        ]))
+//
+//        attributedText.append(NSAttributedString(string: "2048!", attributes: [
+//            NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20),
+//            NSAttributedString.Key.foregroundColor: ColorConstants.tertiary,
+//        ]))
+        lbl.attributedText = attributedText
+        
+        return lbl
+    }()
+    
+    
     lazy var boardView: UICollectionView = {
         let flowLayout : UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         
@@ -34,39 +161,21 @@ class GameView: UIView {
         clnView.translatesAutoresizingMaskIntoConstraints = false
         clnView.register(GameCollectionViewCell.self, forCellWithReuseIdentifier: GameCollectionViewCell.nameOfClass)
         
-        clnView.backgroundColor = ColorConstants.gridBG
+        clnView.backgroundColor = UIColor(named: "grid")
         clnView.layer.cornerRadius = 4
         clnView.clipsToBounds = true
         
         return clnView
     }()
     
-    lazy var descriptionLabel: UILabel = {
-        let lbl = UILabel()
-        lbl.translatesAutoresizingMaskIntoConstraints = false
-        
-        let attributedText = NSMutableAttributedString(string: "Join the tiles, get to ", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17), NSAttributedString.Key.foregroundColor: ColorConstants.cellBG])
-        
-        attributedText.append(NSAttributedString(string: "2048!", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20), NSAttributedString.Key.foregroundColor: ColorConstants.cellBG]))
-        
-        lbl.attributedText = attributedText
-        
-        return lbl
-    }()
-    
-    lazy var titleLabel: UILabel = {
-        let lbl = UILabel()
-        lbl.translatesAutoresizingMaskIntoConstraints = false
-        lbl.font = UIFont.systemFont(ofSize: 34, weight: UIFont.Weight.bold)
-        lbl.textColor = ColorConstants.cellBG
-        lbl.text = "2048"
-        return lbl
-    }()
+    override func layoutSubviews() {
+        scoreLabel.sizeToFit()
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        backgroundColor = ColorConstants.mainBG
+        backgroundColor = UIColor(named: "background")
         commonInit()
     }
     
@@ -83,46 +192,93 @@ class GameView: UIView {
         addSubview(titleLabel)
         addSubview(descriptionLabel)
         addSubview(boardView)
+        addSubview(statStackView)
+        addSubview(howToPlayLabel)
         
+        statStackView.addArrangedSubview(scoreLabel)
+        statStackView.addArrangedSubview(multiplierLabel)
+
     }
     
     private func configureConstraints() {
-        
+  
         let titleConstraints = [
             titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
             titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
-
             titleLabel.bottomAnchor.constraint(equalTo: descriptionLabel.topAnchor, constant: -8)
         ]
         
         let descConstraints = [
             descriptionLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
             descriptionLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
-
-            descriptionLabel.bottomAnchor.constraint(equalTo: boardView.topAnchor, constant: -16)
+            descriptionLabel.bottomAnchor.constraint(equalTo: statStackView.topAnchor, constant: -8)
+        ]
+        
+        let statStackViewConstraints = [
+            statStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
+            statStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
+            statStackView.bottomAnchor.constraint(equalTo: boardView.topAnchor, constant: -16)
         ]
         
         
         let clnViewConstraints = [
-            // Vertical
             boardView.centerYAnchor.constraint(equalTo: centerYAnchor),
-            
-            // Horizontal
             boardView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
             boardView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
             boardView.heightAnchor.constraint(equalTo: boardView.widthAnchor),
             boardView.centerXAnchor.constraint(equalTo: centerXAnchor),
         ]
         
+        let howToPlayConstraints = [
+            howToPlayLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
+            howToPlayLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
+            howToPlayLabel.topAnchor.constraint(equalTo: bottomAnchor, constant: -54),
+        ]
+        
         NSLayoutConstraint.activate(titleConstraints)
         NSLayoutConstraint.activate(descConstraints)
+        NSLayoutConstraint.activate(statStackViewConstraints)
         NSLayoutConstraint.activate(clnViewConstraints)
-
-
-
+        NSLayoutConstraint.activate(howToPlayConstraints)
         
     }
     
+}
+
+// MARK: - Update Stats
+extension GameView {
+    func updateScore(score: Int) {
+        guard let prevScore = scoreLabel.text else { return }
+        let prevScoreInt = Int(prevScore)
+        
+        guard score != prevScoreInt else { return }
+        
+        scoreLabel.text = String(score)
+        
+        // change the transform property to provide a sliding in effect
+        scoreLabel.transform = CGAffineTransform(translationX: 0, y: 25)
+        scoreLabel.alpha = 0.1
+        
+        UIView.animate(withDuration: self.animationDuration,
+                       delay: 0.0,
+                       usingSpringWithDamping: 0.5,
+                       initialSpringVelocity: 5,
+                       options: [.curveEaseInOut],
+                       animations: {
+            self.scoreLabel.alpha = 0.8
+            self.scoreLabel.transform = .identity
+        })
+    }
+    
+    func updateMultiplier(multiplier: Int) {
+        multiplierLabel.text = "x\(String(multiplier))"
+
+        multiplierLabel.alpha = 0.1
+        
+        UIView.animate(withDuration: self.animationDuration, delay: 0.0, options: [.curveEaseInOut], animations: {
+            self.multiplierLabel.alpha = 0.8
+        })
+    }
 }
 
 
@@ -161,7 +317,7 @@ extension GameView {
         let fromCellScore = fromCell?.scoreLabel.text
         
         //update fromCell properties to default
-        fromCell?.backgroundColor = ColorConstants.cellBG
+        fromCell?.backgroundColor = UIColor(named: "cell")
         fromCell?.scoreLabel.text = nil
         
         // update the toCell properties with fromCell properties
@@ -181,13 +337,13 @@ extension GameView {
         let toIndexPath = IndexPath(item: toTile.position.y, section: toTile.position.x)
         let toCell = boardView.cellForItem(at: toIndexPath) as? GameCollectionViewCell
         
-        // update fromCell, andFromCell values to default
-        fromCell?.backgroundColor = ColorConstants.cellBG
-        andFromCell?.backgroundColor = ColorConstants.cellBG
+        // update fromCell, andFromCell properties to default
+        fromCell?.backgroundColor = UIColor(named: "cell")
+        andFromCell?.backgroundColor = UIColor(named: "cell")
         fromCell?.scoreLabel.text = nil
         andFromCell?.scoreLabel.text = nil
         
-        // update to toCell values
+        // update to toCell properties
         toCell?.backgroundColor = toTile.value.getBgColor()
         toCell?.scoreLabel.text = String(toTile.value.score)
         
@@ -225,7 +381,7 @@ extension GameView {
         let toCellPosition = toCell?.layer.position
         toCell?.layer.position = (fromCell?.layer.position)!
         
-        UIView.animate(withDuration: self.animationDuration, delay: 0.0,options: [.curveEaseOut], animations: {
+        UIView.animate(withDuration: self.animationDuration, delay: 0.0, options: [.curveEaseOut], animations: {
             // update to cell position to its original position
             toCell?.layer.position = toCellPosition!
         })
