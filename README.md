@@ -1,5 +1,4 @@
 # Swift-2048
-================
 
 iOS drop-in library presenting a clean-room Swift/UIKit implementation of the game 2048.
 
@@ -20,16 +19,16 @@ The core is decoupled from the GUI using the protocol delegate pattern, so it is
 - Scoring system
 - Pretty animations, all done without SpriteKit
 
-## Contributing
+### Contributing
 -------
 Changes and improvements are more than welcome! Feel free to fork and open a pull request. Please make your changes in a specific branch and request to pull into `main`! If you can, please make sure the game fully works before sending the PR, as that will help speed up the process.
 
-## License
+### License
 -------
 Released under the terms of the [MIT license](https://github.com/uberspot/2048-android/blob/master/LICENSE).
 
 2048 by Gabriele Cirulli (http://gabrielecirulli.com/). The original game can be found at http://gabrielecirulli.github.io/2048/, as can all relevant attributions. 
 
-## Donations
+### Donations
 -------
 I made this in my spare time, but if you enjoyed the game and feel like buying me coffee, you can donate at my BTC address: `3KgkUHSGqsNEiSQJ4mid5PmraxugtdBBQP`. Thank you very much!
