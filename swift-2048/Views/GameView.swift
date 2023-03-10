@@ -55,6 +55,7 @@ class GameView: UIView {
         lbl.font = UIFont.systemFont(ofSize: 34, weight: UIFont.Weight.bold)
         lbl.textColor = UIColor(named: "label")
         lbl.textAlignment = .right
+        lbl.alpha = 0.8
         lbl.text = "0"
         
         return lbl
@@ -66,6 +67,7 @@ class GameView: UIView {
         lbl.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.medium)
         lbl.textColor = UIColor(named: "label")
         lbl.textAlignment = .right
+        lbl.alpha = 0.8
         lbl.text = "x0"
         
         return lbl
@@ -96,50 +98,50 @@ class GameView: UIView {
             NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17, weight: .light),
         ]))
         
-//        let attributedText = NSMutableAttributedString(string: "HOW TO PLAY: ", attributes: [
-//            NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20),
-//            NSAttributedString.Key.foregroundColor: ColorConstants.tertiary,
-//        ])
-//
-//        attributedText.append(NSAttributedString(string: "Use your ", attributes: [
-//            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17),
-//            NSAttributedString.Key.foregroundColor: ColorConstants.tertiary,
-//        ]))
-//
-//        attributedText.append(NSAttributedString(string: "arrow keys ", attributes: [
-//            NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20),
-//            NSAttributedString.Key.foregroundColor: ColorConstants.tertiary,
-//        ]))
-//
-//        attributedText.append(NSAttributedString(string: "to move the tiles. ", attributes: [
-//            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17),
-//            NSAttributedString.Key.foregroundColor: ColorConstants.tertiary,
-//        ]))
-//
-//        attributedText.append(NSAttributedString(string: "Tiles with the same number ", attributes: [
-//            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17),
-//            NSAttributedString.Key.foregroundColor: ColorConstants.tertiary,
-//        ]))
-//
-//        attributedText.append(NSAttributedString(string: "merge into one ", attributes: [
-//            NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20),
-//            NSAttributedString.Key.foregroundColor: ColorConstants.tertiary,
-//        ]))
-//
-//        attributedText.append(NSAttributedString(string: "when they touch. ", attributes: [
-//            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17),
-//            NSAttributedString.Key.foregroundColor: ColorConstants.tertiary,
-//        ]))
-//
-//        attributedText.append(NSAttributedString(string: "Add them up to reach ", attributes: [
-//            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17),
-//            NSAttributedString.Key.foregroundColor: ColorConstants.tertiary,
-//        ]))
-//
-//        attributedText.append(NSAttributedString(string: "2048!", attributes: [
-//            NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20),
-//            NSAttributedString.Key.foregroundColor: ColorConstants.tertiary,
-//        ]))
+        //        let attributedText = NSMutableAttributedString(string: "HOW TO PLAY: ", attributes: [
+        //            NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20),
+        //            NSAttributedString.Key.foregroundColor: ColorConstants.tertiary,
+        //        ])
+        //
+        //        attributedText.append(NSAttributedString(string: "Use your ", attributes: [
+        //            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17),
+        //            NSAttributedString.Key.foregroundColor: ColorConstants.tertiary,
+        //        ]))
+        //
+        //        attributedText.append(NSAttributedString(string: "arrow keys ", attributes: [
+        //            NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20),
+        //            NSAttributedString.Key.foregroundColor: ColorConstants.tertiary,
+        //        ]))
+        //
+        //        attributedText.append(NSAttributedString(string: "to move the tiles. ", attributes: [
+        //            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17),
+        //            NSAttributedString.Key.foregroundColor: ColorConstants.tertiary,
+        //        ]))
+        //
+        //        attributedText.append(NSAttributedString(string: "Tiles with the same number ", attributes: [
+        //            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17),
+        //            NSAttributedString.Key.foregroundColor: ColorConstants.tertiary,
+        //        ]))
+        //
+        //        attributedText.append(NSAttributedString(string: "merge into one ", attributes: [
+        //            NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20),
+        //            NSAttributedString.Key.foregroundColor: ColorConstants.tertiary,
+        //        ]))
+        //
+        //        attributedText.append(NSAttributedString(string: "when they touch. ", attributes: [
+        //            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17),
+        //            NSAttributedString.Key.foregroundColor: ColorConstants.tertiary,
+        //        ]))
+        //
+        //        attributedText.append(NSAttributedString(string: "Add them up to reach ", attributes: [
+        //            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17),
+        //            NSAttributedString.Key.foregroundColor: ColorConstants.tertiary,
+        //        ]))
+        //
+        //        attributedText.append(NSAttributedString(string: "2048!", attributes: [
+        //            NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20),
+        //            NSAttributedString.Key.foregroundColor: ColorConstants.tertiary,
+        //        ]))
         lbl.attributedText = attributedText
         
         return lbl
@@ -197,11 +199,11 @@ class GameView: UIView {
         
         statStackView.addArrangedSubview(scoreLabel)
         statStackView.addArrangedSubview(multiplierLabel)
-
+        
     }
     
     private func configureConstraints() {
-  
+        
         let titleConstraints = [
             titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
             titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
@@ -213,6 +215,7 @@ class GameView: UIView {
             descriptionLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
             descriptionLabel.bottomAnchor.constraint(equalTo: statStackView.topAnchor, constant: -8)
         ]
+        
         
         let statStackViewConstraints = [
             statStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
@@ -272,12 +275,6 @@ extension GameView {
     
     func updateMultiplier(multiplier: Int) {
         multiplierLabel.text = "x\(String(multiplier))"
-
-        multiplierLabel.alpha = 0.1
-        
-        UIView.animate(withDuration: self.animationDuration, delay: 0.0, options: [.curveEaseInOut], animations: {
-            self.multiplierLabel.alpha = 0.8
-        })
     }
 }
 
