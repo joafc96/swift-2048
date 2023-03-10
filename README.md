@@ -31,4 +31,5 @@ Released under the terms of the [MIT license](https://github.com/uberspot/2048-a
 2048 by Gabriele Cirulli (http://gabrielecirulli.com/). The original game can be found at http://gabrielecirulli.github.io/2048/, as can all relevant attributions. 
 
 ## Donations
+-------
 I made this in my spare time, but if you enjoyed the game and feel like buying me coffee, you can donate at my BTC address: `3KgkUHSGqsNEiSQJ4mid5PmraxugtdBBQP`. Thank you very much!
