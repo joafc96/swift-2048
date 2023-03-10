@@ -1,4 +1,4 @@
-Swift-2048
+# Swift-2048
 ================
 
 iOS drop-in library presenting a clean-room Swift/UIKit implementation of the game 2048.
@@ -7,29 +7,27 @@ Game logic is written in Swift, the GUI in UIKit. The entire GUI is written in c
 
 The core is decoupled from the GUI using the protocol delegate pattern, so it is easy to pull the code, extract the core and then build a new GUI around it.
 
-Screenshot
+### Screenshots
 ----------
+<p align="center">
+  <img src="https://cloud.githubusercontent.com/assets/1175750/8614312/280e5dc2-26f1-11e5-9f1f-5891c3ca8b26.png" alt="Screenshot"/>
+</p>
 
-Instructions
-------------
-The included sample app demonstrates the game. Simply tap the button to play. Swipe to move the tiles. For additional fun try tweaking the parameters.
-
-
-Features
+### Features
 --------
 - 2048, the tile-matching game, but native for iOS
 - Configure size of game board (NxN square) and winning threshold
-- Choose between button controls, swipe gesture controls, or both
 - Scoring system
 - Pretty animations, all done without SpriteKit
 
-Future Features
----------------
-- Better win/lose screens than UIAlertViews
-- Actual library (rather than raw code hanging off a sample view controller)
+## Contributing
+Changes and improvements are more than welcome! Feel free to fork and open a pull request. Please make your changes in a specific branch and request to pull into `main`! If you can, please make sure the game fully works before sending the PR, as that will help speed up the process.
 
-License
+## License
 -------
-(c) 2023 Joe George. Released under the terms of the MIT license.
+Released under the terms of the [MIT license](https://github.com/uberspot/2048-android/blob/master/LICENSE).
 
 2048 by Gabriele Cirulli (http://gabrielecirulli.com/). The original game can be found at http://gabrielecirulli.github.io/2048/, as can all relevant attributions. 
+
+## Donations
+I made this in my spare time, but if you enjoyed the game and feel like buying me coffee, you can donate at my BTC address: `3KgkUHSGqsNEiSQJ4mid5PmraxugtdBBQP`. Thank you very much!
