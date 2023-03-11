@@ -11,6 +11,7 @@ The core is decoupled from the GUI using the protocol delegate pattern, so it is
 <p align="center">
   <img src="https://github.com/joafc96/swift-2048/blob/main/swift-2048/Screenshots/dark_2048.png" alt="screenshot_dark" width="220" height="480"/>
   <img src="https://github.com/joafc96/swift-2048/blob/main/swift-2048/Screenshots/light_2048.png" alt="screenshot_light" width="220" height="480"/>
+  <img src=" https://github.com/joafc96/swift-2048/blob/main/swift-2048/Screenshots/2048.gif" alt="screenshot_light" width="220" height="480"/>
 </p>
 
 ### Features
