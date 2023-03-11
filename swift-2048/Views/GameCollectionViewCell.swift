@@ -9,6 +9,15 @@ import UIKit
 
 class GameCollectionViewCell: UICollectionViewCell {
     
+    lazy var cellView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor =  UIColor(named: "cell")
+        view.layer.cornerRadius = 4
+        
+        return view
+    }()
+    
     lazy var scoreLabel: UILabel = {
         let lbl = UILabel()
         lbl.translatesAutoresizingMaskIntoConstraints = false
@@ -34,6 +43,7 @@ class GameCollectionViewCell: UICollectionViewCell {
     }
     
     override func layoutSubviews() {
+        
     }
     
     private func commonInit() {
@@ -42,10 +52,19 @@ class GameCollectionViewCell: UICollectionViewCell {
     }
     
     private func configureSubViews() {
-        addSubview(scoreLabel)
+        addSubview(cellView)
+        cellView.addSubview(scoreLabel)
     }
     
     private func configureConstraints() {
+        
+        let cellViewConstraints = [
+            cellView.widthAnchor.constraint(equalTo: widthAnchor),
+            cellView.heightAnchor.constraint(equalTo: heightAnchor),
+            
+        ]
+        
+       
         
         let scoreLblConstraints = [
             scoreLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 4),
@@ -55,5 +74,6 @@ class GameCollectionViewCell: UICollectionViewCell {
         ]
         
         NSLayoutConstraint.activate(scoreLblConstraints)
+        NSLayoutConstraint.activate(cellViewConstraints)
     }
 }

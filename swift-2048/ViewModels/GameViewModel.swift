@@ -40,11 +40,11 @@ class GameViewModel<Delegate: GameDelegate>  where Delegate.T == TileValue {
     
     weak var delegate: Delegate?
     var viewHasAppeared: Bool = false
-    var initialGameStateActions = [MoveAction<D>]()
     var actionsToPerformOnAppearance = [MoveAction<D>]()
+    var isGameOver: Bool = false
 
 
-    init(dimension: Int = 4, threshold: D = TileValue.TwoThousandAndFourtyEight){
+    init(dimension: Int = 2, threshold: D = TileValue.TwoThousandAndFourtyEight){
         self.dimension = dimension
         self.threshold = threshold
         
@@ -61,12 +61,11 @@ extension GameViewModel {
     
     // MARK: - Start Game
     func startGame() {
-        // nofy the game has created
+        // nofy the game has started
         self.delegate?.gameDidStart(dimension: self.dimension)
         
         let firstSpawnAction = self.engine.spawnTileAtRandomCoordinate()
         let secondSpawnAction = self.engine.spawnTileAtRandomCoordinate()
-        
         
         if let firstSpawnAction = firstSpawnAction {
             self.delegate?.gameDidProduceActions(actions: [firstSpawnAction])
@@ -75,52 +74,6 @@ extension GameViewModel {
         if let secondSpawnAction = secondSpawnAction {
             self.delegate?.gameDidProduceActions(actions: [secondSpawnAction])
         }
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.4, execute: { [weak self] in
-            self?.moveInDirection(.Left)
-        })
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.8, execute: { [weak self] in
-            self?.moveInDirection(.Up)
-        })
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.2, execute: { [weak self] in
-            self?.moveInDirection(.Down)
-        })
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.6, execute: { [weak self] in
-            self?.moveInDirection(.Right)
-        })
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0, execute: { [weak self] in
-            self?.moveInDirection(.Left)
-        })
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.4, execute: { [weak self] in
-            self?.moveInDirection(.Down)
-        })
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.8, execute: { [weak self] in
-            self?.moveInDirection(.Up)
-        })
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3.2, execute: { [weak self] in
-            self?.moveInDirection(.Right)
-        })
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3.6, execute: { [weak self] in
-            self?.moveInDirection(.Down)
-        })
-        DispatchQueue.main.asyncAfter(deadline: .now() + 4.0, execute: { [weak self] in
-            self?.moveInDirection(.Up)
-        })
-        DispatchQueue.main.asyncAfter(deadline: .now() + 4.4, execute: { [weak self] in
-            self?.moveInDirection(.Down)
-        })
-        DispatchQueue.main.asyncAfter(deadline: .now() + 4.8, execute: { [weak self] in
-            self?.moveInDirection(.Left)
-        })
-        DispatchQueue.main.asyncAfter(deadline: .now() + 5.2, execute: { [weak self] in
-            self?.moveInDirection(.Right)
-        })
-        DispatchQueue.main.asyncAfter(deadline: .now() + 5.6, execute: { [weak self] in
-            self?.moveInDirection(.Down)
-        })
-        DispatchQueue.main.asyncAfter(deadline: .now() + 6.0, execute: { [weak self] in
-            self?.moveInDirection(.Up)
-        })
     }
     
     // MARK: - Move In Direction
@@ -156,7 +109,13 @@ extension GameViewModel {
     }
     
     func restartGame() {
+        isGameOver = false
+        viewHasAppeared = false
+        actionsToPerformOnAppearance = []
         
+        score = 0
+        mergeMultiplier = 0
+                
     }
     
     

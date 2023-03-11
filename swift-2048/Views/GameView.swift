@@ -370,7 +370,7 @@ extension GameView {
         })
     }
     
-    private func executeMoveAnimation(toCell: GameCollectionViewCell?, fromCell: GameCollectionViewCell?) {
+    private func executeMoveAnimation(toCell: GameCollectionViewCell?, fromCell: GameCollectionViewCell?, completion: ((Bool) -> Void)? = nil) {
         /* create a temp copy of to cell position and now,
          update toCell position to the fromCell position (so to create the translation effect).
          */
@@ -380,6 +380,6 @@ extension GameView {
         UIView.animate(withDuration: self.animationDuration, delay: 0.0, options: [.curveEaseOut], animations: {
             // update to cell position to its original position
             toCell?.layer.position = toCellPosition!
-        })
+        }, completion: completion)
     }
 }

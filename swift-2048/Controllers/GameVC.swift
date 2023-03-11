@@ -89,28 +89,28 @@ extension GameVC {
     
     @objc
     private func leftSwipe(_ gestureRecognizer : UISwipeGestureRecognizer) {
-        if (gestureRecognizer.state == .ended) {
+        if (gestureRecognizer.state == .ended && !viewModel.isGameOver) {
             self.viewModel.moveInDirection(.Left)
         }
     }
     
     @objc
     private func rightSwipe(_ gestureRecognizer: UISwipeGestureRecognizer) {
-        if (gestureRecognizer.state == .ended) {
+        if (gestureRecognizer.state == .ended && !viewModel.isGameOver) {
             self.viewModel.moveInDirection(.Right)
         }
     }
     
     @objc
     private func upSwipe(_ gestureRecognizer: UISwipeGestureRecognizer) {
-        if (gestureRecognizer.state == .ended) {
+        if (gestureRecognizer.state == .ended && !viewModel.isGameOver) {
             self.viewModel.moveInDirection(.Up)
         }
     }
     
     @objc
     private func downSwipe(_ gestureRecognizer: UISwipeGestureRecognizer) {
-        if (gestureRecognizer.state == .ended) {
+        if (gestureRecognizer.state == .ended && !viewModel.isGameOver) {
             self.viewModel.moveInDirection(.Down)
         }
     }
@@ -164,7 +164,8 @@ extension GameVC: GameDelegate {
     }
     
     func gameDidEnd() {
-        print("Game Over")
+        viewModel.isGameOver = true
+        print("game over booooooo")
     }
 }
 
