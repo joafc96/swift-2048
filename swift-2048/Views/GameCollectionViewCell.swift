@@ -9,26 +9,11 @@ import UIKit
 
 class GameCollectionViewCell: UICollectionViewCell {
     
-    lazy var cellView: UIView = {
-        let view = UIView()
+    lazy var cellView: CellView = {
+        let view = CellView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor =  UIColor(named: "cell")
-        view.layer.cornerRadius = 4
         
         return view
-    }()
-    
-    lazy var scoreLabel: UILabel = {
-        let lbl = UILabel()
-        lbl.translatesAutoresizingMaskIntoConstraints = false
-        lbl.font = UIFont.systemFont(ofSize: 32, weight: UIFont.Weight.bold)
-        lbl.textColor = UIColor(named: "cell")
-        lbl.minimumScaleFactor = 0.4
-        lbl.adjustsFontSizeToFitWidth = true
-        lbl.textAlignment = .center
-        lbl.clipsToBounds = true
-        
-        return lbl
     }()
     
     override init(frame: CGRect) {
@@ -42,38 +27,19 @@ class GameCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func layoutSubviews() {
-        
-    }
-    
     private func commonInit() {
-        configureSubViews()
-        configureConstraints()
+        configureCellView()
     }
     
-    private func configureSubViews() {
+    private func configureCellView() {
         addSubview(cellView)
-        cellView.addSubview(scoreLabel)
-    }
-    
-    private func configureConstraints() {
-        
         let cellViewConstraints = [
-            cellView.widthAnchor.constraint(equalTo: widthAnchor),
             cellView.heightAnchor.constraint(equalTo: heightAnchor),
-            
+            cellView.widthAnchor.constraint(equalTo: widthAnchor),
+            cellView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            cellView.trailingAnchor.constraint(equalTo: trailingAnchor),
         ]
-        
-       
-        
-        let scoreLblConstraints = [
-            scoreLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 4),
-            scoreLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -4),
-            scoreLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
-            scoreLabel.centerYAnchor.constraint(equalTo: centerYAnchor)
-        ]
-        
-        NSLayoutConstraint.activate(scoreLblConstraints)
+
         NSLayoutConstraint.activate(cellViewConstraints)
     }
 }

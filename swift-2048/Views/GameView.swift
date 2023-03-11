@@ -224,7 +224,7 @@ class GameView: UIView {
         ]
         
         
-        let clnViewConstraints = [
+        let boardViewConstraints = [
             boardView.centerYAnchor.constraint(equalTo: centerYAnchor),
             boardView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
             boardView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
@@ -241,11 +241,10 @@ class GameView: UIView {
         NSLayoutConstraint.activate(titleConstraints)
         NSLayoutConstraint.activate(descConstraints)
         NSLayoutConstraint.activate(statStackViewConstraints)
-        NSLayoutConstraint.activate(clnViewConstraints)
+        NSLayoutConstraint.activate(boardViewConstraints)
         NSLayoutConstraint.activate(howToPlayConstraints)
         
     }
-    
 }
 
 // MARK: - Update Stats
@@ -278,7 +277,6 @@ extension GameView {
     }
 }
 
-
 // MARK: - Move Actions
 extension GameView {
     
@@ -306,80 +304,84 @@ extension GameView {
         let fromIndexPath = IndexPath(item: from.y, section: from.x)
         let toIndexPath = IndexPath(item: to.y, section: to.x)
         
-        let fromCell = boardView.cellForItem(at: fromIndexPath) as? GameCollectionViewCell
-        let toCell = boardView.cellForItem(at: toIndexPath) as? GameCollectionViewCell
+        let fromNode = boardView.cellForItem(at: fromIndexPath) as? GameCollectionViewCell
+        let toNode = boardView.cellForItem(at: toIndexPath) as? GameCollectionViewCell
         
         //keep a copy of the fromCell properties to update with the toCell properties
-        let fromCellColor = fromCell?.backgroundColor
-        let fromCellScore = fromCell?.scoreLabel.text
+        let fromCellColor = fromNode?.cellView.backgroundColor
+        let fromCellScore = fromNode?.cellView.scoreLabel.text
         
         //update fromCell properties to default
-        fromCell?.backgroundColor = UIColor(named: "cell")
-        fromCell?.scoreLabel.text = nil
+        fromNode?.cellView.backgroundColor = UIColor(named: "cell")
+        fromNode?.cellView.scoreLabel.text = nil
         
         // update the toCell properties with fromCell properties
-        toCell?.backgroundColor = fromCellColor
-        toCell?.scoreLabel.text = fromCellScore
+        toNode?.cellView.backgroundColor = fromCellColor
+        toNode?.cellView.scoreLabel.text = fromCellScore
         
-        executeMoveAnimation(toCell: toCell, fromCell: fromCell)
+        executeMoveAnimation(toNode: toNode, fromNode: fromNode)
     }
     
     private func merge(from: Coordinate, andFrom: Coordinate, toTile: Tile<D>) {
         let fromIndexPath = IndexPath(item: from.y, section: from.x)
+        let fromNode = boardView.cellForItem(at: fromIndexPath) as? GameCollectionViewCell
+
         let andFromIndexPath = IndexPath(item: andFrom.y, section: andFrom.x)
-        
-        let fromCell = boardView.cellForItem(at: fromIndexPath) as? GameCollectionViewCell
-        let andFromCell = boardView.cellForItem(at: andFromIndexPath) as? GameCollectionViewCell
+        let andFromNode = boardView.cellForItem(at: andFromIndexPath) as? GameCollectionViewCell
         
         let toIndexPath = IndexPath(item: toTile.position.y, section: toTile.position.x)
-        let toCell = boardView.cellForItem(at: toIndexPath) as? GameCollectionViewCell
+        let toNode = boardView.cellForItem(at: toIndexPath) as? GameCollectionViewCell
         
-        // update fromCell, andFromCell properties to default
-        fromCell?.backgroundColor = UIColor(named: "cell")
-        andFromCell?.backgroundColor = UIColor(named: "cell")
-        fromCell?.scoreLabel.text = nil
-        andFromCell?.scoreLabel.text = nil
+        // update fromNode's, and FromNode's cellView properties to default
+        fromNode?.cellView.backgroundColor = UIColor(named: "cell")
+        andFromNode?.cellView.backgroundColor = UIColor(named: "cell")
         
-        // update to toCell properties
-        toCell?.backgroundColor = toTile.value.getBgColor()
-        toCell?.scoreLabel.text = String(toTile.value.score)
+        fromNode?.cellView.scoreLabel.text = nil
+        andFromNode?.cellView.scoreLabel.text = nil
+
+        // update to toNode's cellView properties
+        toNode?.cellView.backgroundColor = toTile.value.getBgColor()
+        toNode?.cellView.scoreLabel.text = String(toTile.value.score)
         
-        executeMoveAnimation(toCell: toCell, fromCell: fromCell)
-    }
+        executeMoveAnimation(toNode: toNode, fromNode: fromNode)
+}
     
     private func spawn(tile: Tile<D>) {
         let spawnIndexPath = IndexPath(item: tile.position.y, section: tile.position.x)
-        let spawnCell = boardView.cellForItem(at: spawnIndexPath) as? GameCollectionViewCell
+        let spawnNode = boardView.cellForItem(at: spawnIndexPath) as? GameCollectionViewCell
         
-        // update the spawnCell properties
-        spawnCell?.backgroundColor = tile.value.getBgColor()
-        spawnCell?.scoreLabel.text = String(tile.value.score)
+        // update the spawnNode's cellView properties
+        spawnNode?.cellView.backgroundColor = tile.value.getBgColor()
+        spawnNode?.cellView.scoreLabel.text = String(tile.value.score)
         
-        executeSpawnAnimation(spawnCell: spawnCell)
+        executeSpawnAnimation(spawnNode: spawnNode)
     }
     
-    private func executeSpawnAnimation(spawnCell: GameCollectionViewCell?) {
-        spawnCell?.alpha = 0.1
-        spawnCell?.transform = CGAffineTransform(scaleX: 0.1, y: 0.1).concatenating(CGAffineTransform(rotationAngle: 3.14))
+    private func executeSpawnAnimation(spawnNode: GameCollectionViewCell?) {
+        
+        spawnNode?.cellView.alpha = 0.1
+        spawnNode?.cellView.transform = CGAffineTransform(scaleX: 0.1, y: 0.1).concatenating(CGAffineTransform(rotationAngle: 3.14))
         
         UIView.animate(withDuration: self.animationDuration, delay: 0.0, options: [.curveEaseOut] ,  animations: {
-            spawnCell?.alpha = 1.0
-            spawnCell?.transform = .identity
+            spawnNode?.cellView.alpha = 1.0
+            spawnNode?.cellView.transform = .identity
         }, completion: { _ in
             self.delegate?.boardViewDidFinishAnimating()
         })
     }
     
-    private func executeMoveAnimation(toCell: GameCollectionViewCell?, fromCell: GameCollectionViewCell?, completion: ((Bool) -> Void)? = nil) {
-        /* create a temp copy of to cell position and now,
-         update toCell position to the fromCell position (so to create the translation effect).
+    private func executeMoveAnimation(toNode: GameCollectionViewCell?, fromNode: GameCollectionViewCell?, completion: ((Bool) -> Void)? = nil) {
+        /* create a temp copy of toNode's position and
+         now update toNode's cellView position to the fromNode's cellView position (so to create the translation effect).
          */
-        let toCellPosition = toCell?.layer.position
-        toCell?.layer.position = (fromCell?.layer.position)!
+        let toNodePosition = toNode?.layer.position
+        let fromNodePosition = fromNode?.layer.position
+
+        toNode?.cellView.layer.position = fromNodePosition!
         
         UIView.animate(withDuration: self.animationDuration, delay: 0.0, options: [.curveEaseOut], animations: {
             // update to cell position to its original position
-            toCell?.layer.position = toCellPosition!
-        }, completion: completion)
+            toNode?.cellView.layer.position = toNodePosition!
+        },completion: completion)
     }
 }

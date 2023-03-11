@@ -29,6 +29,7 @@
 		0BDE3A5C29B8B40B000F85B5 /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BDE3A5B29B8B40B000F85B5 /* UIView+Extensions.swift */; };
 		0BDE3A5E29B8D79B000F85B5 /* ColorConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BDE3A5D29B8D79B000F85B5 /* ColorConstants.swift */; };
 		0BDE3A6029B8EF05000F85B5 /* GameCollectionViewProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BDE3A5F29B8EF05000F85B5 /* GameCollectionViewProvider.swift */; };
+		0BF6971D29BC9A19000B5197 /* CellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BF6971C29BC9A19000B5197 /* CellView.swift */; };
 		0BFED36329B5EDDF0027F5FD /* Int+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BFED36229B5EDDF0027F5FD /* Int+Extensions.swift */; };
 /* End PBXBuildFile section */
 
@@ -68,6 +69,7 @@
 		0BDE3A5B29B8B40B000F85B5 /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
 		0BDE3A5D29B8D79B000F85B5 /* ColorConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorConstants.swift; sourceTree = "<group>"; };
 		0BDE3A5F29B8EF05000F85B5 /* GameCollectionViewProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameCollectionViewProvider.swift; sourceTree = "<group>"; };
+		0BF6971C29BC9A19000B5197 /* CellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellView.swift; sourceTree = "<group>"; };
 		0BFED36229B5EDDF0027F5FD /* Int+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -159,6 +161,7 @@
 			children = (
 				0BDE3A5129B8AB1F000F85B5 /* GameView.swift */,
 				0BDE3A5329B8AE60000F85B5 /* GameCollectionViewCell.swift */,
+				0BF6971C29BC9A19000B5197 /* CellView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -329,6 +332,7 @@
 				0BDE3A5E29B8D79B000F85B5 /* ColorConstants.swift in Sources */,
 				0BDE3A5229B8AB1F000F85B5 /* GameView.swift in Sources */,
 				0BFED36329B5EDDF0027F5FD /* Int+Extensions.swift in Sources */,
+				0BF6971D29BC9A19000B5197 /* CellView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

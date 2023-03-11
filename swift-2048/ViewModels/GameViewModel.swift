@@ -44,7 +44,7 @@ class GameViewModel<Delegate: GameDelegate>  where Delegate.T == TileValue {
     var isGameOver: Bool = false
 
 
-    init(dimension: Int = 2, threshold: D = TileValue.TwoThousandAndFourtyEight){
+    init(dimension: Int = 3, threshold: D = TileValue.TwoThousandAndFourtyEight){
         self.dimension = dimension
         self.threshold = threshold
         
