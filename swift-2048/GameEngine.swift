@@ -52,10 +52,11 @@ class GameEngine<T: Evolvable> {
         self.threshold = threshold
     }
     
-    // MARK: - Computed properties
+    // MARK: - Has Empty Slot
     private var hasEmptySlot: Bool {
         for row in 0..<self.dimension {
             for col in 0..<self.dimension {
+                
                 if self.board[row][col] == nil { return true }
             }
         }
@@ -528,8 +529,8 @@ class GameEngine<T: Evolvable> {
     
     // MARK: - Is Game Over
     func isGameOver() -> Bool {
-        guard self.hasEmptySlot else { return false }
-        
+        guard !self.hasEmptySlot else { return false }
+    
         // check if horizontal and vertical move are possible
         return isVerticalGameOver() && isHorizontalGameOver()
     }

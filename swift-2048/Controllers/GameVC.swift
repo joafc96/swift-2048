@@ -38,6 +38,7 @@ class GameVC: UIViewController {
         viewModel.startGame()
     
         configureCollectionViewDelegates()
+        setupSwipes()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -59,6 +60,63 @@ class GameVC: UIViewController {
     }
     
 }
+
+
+// MARK: - Swipe Gesture Recognizers
+extension GameVC {
+    func setupSwipes() {
+        let leftSwipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(GameVC.leftSwipe))
+        leftSwipeGesture.numberOfTouchesRequired = 1
+        leftSwipeGesture.direction = .left
+        gameView.addGestureRecognizer(leftSwipeGesture)
+        
+        let rightSwipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(GameVC.rightSwipe))
+        rightSwipeGesture.numberOfTouchesRequired = 1
+        rightSwipeGesture.direction = .right
+        gameView.addGestureRecognizer(rightSwipeGesture)
+        
+        let upSwipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(GameVC.upSwipe))
+        upSwipeGesture.numberOfTouchesRequired = 1
+        upSwipeGesture.direction = .up
+        gameView.addGestureRecognizer(upSwipeGesture)
+        
+        let downSwipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(GameVC.downSwipe))
+        downSwipeGesture.numberOfTouchesRequired = 1
+        downSwipeGesture.direction = .down
+        gameView.addGestureRecognizer(downSwipeGesture)
+    }
+    
+    
+    @objc
+    private func leftSwipe(_ gestureRecognizer : UISwipeGestureRecognizer) {
+        if (gestureRecognizer.state == .ended) {
+            self.viewModel.moveInDirection(.Left)
+        }
+    }
+    
+    @objc
+    private func rightSwipe(_ gestureRecognizer: UISwipeGestureRecognizer) {
+        if (gestureRecognizer.state == .ended) {
+            self.viewModel.moveInDirection(.Right)
+        }
+    }
+    
+    @objc
+    private func upSwipe(_ gestureRecognizer: UISwipeGestureRecognizer) {
+        if (gestureRecognizer.state == .ended) {
+            self.viewModel.moveInDirection(.Up)
+        }
+    }
+    
+    @objc
+    private func downSwipe(_ gestureRecognizer: UISwipeGestureRecognizer) {
+        if (gestureRecognizer.state == .ended) {
+            self.viewModel.moveInDirection(.Down)
+        }
+    }
+}
+
+
 
 // MARK: - GameCollectionViewProvider
 extension GameVC: GameCollectionViewProviderDelegate {
@@ -106,7 +164,7 @@ extension GameVC: GameDelegate {
     }
     
     func gameDidEnd() {
-        
+        print("Game Over")
     }
 }
 
@@ -114,7 +172,6 @@ extension GameVC: GameDelegate {
 // MARK: - GameViewDelegate
 extension GameVC: GameViewDelegate {
     func boardViewDidFinishAnimating() {
-        print("didFinishAnimating")
         
     }
 }

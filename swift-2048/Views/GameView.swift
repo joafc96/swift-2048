@@ -348,7 +348,6 @@ extension GameView {
     }
     
     private func spawn(tile: Tile<D>) {
-        print("spawn: \(tile)")
         let spawnIndexPath = IndexPath(item: tile.position.y, section: tile.position.x)
         let spawnCell = boardView.cellForItem(at: spawnIndexPath) as? GameCollectionViewCell
         

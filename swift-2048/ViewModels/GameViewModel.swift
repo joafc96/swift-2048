@@ -58,6 +58,8 @@ class GameViewModel<Delegate: GameDelegate>  where Delegate.T == TileValue {
 
 // MARK: - Game Methods
 extension GameViewModel {
+    
+    // MARK: - Start Game
     func startGame() {
         // nofy the game has created
         self.delegate?.gameDidStart(dimension: self.dimension)
@@ -121,6 +123,7 @@ extension GameViewModel {
         })
     }
     
+    // MARK: - Move In Direction
     func moveInDirection(_ direction: MoveDirection) {
         let (scoreChange, actions) = self.engine.moveInDirection(direction)
         
@@ -145,12 +148,9 @@ extension GameViewModel {
                 // and score change on each swipe
                 score += scoreChange
                 mergeMultiplier = scoreChange
-            } else {
-                /*
-                 If no random tile is spwaned it means the board is full.
-                 */
-                checkIsGameOver()
             }
+            // after spawning a random tile check if is game over
+                checkIsGameOver()
         }
         
     }
@@ -158,6 +158,7 @@ extension GameViewModel {
     func restartGame() {
         
     }
+    
     
     private func checkIsGameOver() {
         let gameOver: Bool =   self.engine.isGameOver()
