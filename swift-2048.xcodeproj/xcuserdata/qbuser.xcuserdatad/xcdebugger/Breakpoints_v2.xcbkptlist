@@ -94,8 +94,8 @@
             filePath = "swift-2048/Views/GameView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "384"
-            endingLineNumber = "384"
+            startingLineNumber = "386"
+            endingLineNumber = "386"
             landmarkName = "executeMoveAnimation(toNode:fromNode:completion:)"
             landmarkType = "7">
          </BreakpointContent>

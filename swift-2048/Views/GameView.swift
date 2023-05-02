@@ -160,6 +160,8 @@ class GameView: UIView {
             collectionViewLayout: flowLayout
         )
         
+        clnView.showsVerticalScrollIndicator = false
+        clnView.isScrollEnabled = false
         clnView.translatesAutoresizingMaskIntoConstraints = false
         clnView.register(GameCollectionViewCell.self, forCellWithReuseIdentifier: GameCollectionViewCell.nameOfClass)
         

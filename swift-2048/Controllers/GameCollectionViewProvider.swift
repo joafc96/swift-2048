@@ -40,19 +40,19 @@ extension GameCollectionViewProvider: UICollectionViewDataSource {
         cell.alpha = 0
         return cell
     }
+    
 }
 
 // MARK: - UICollectionViewDelegateFlowLayout
 extension GameCollectionViewProvider: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        let noOfCellsInRow = dimension  //number of column you want according to total count
-        let flowLayout = collectionViewLayout as! UICollectionViewFlowLayout
-        let totalPaddingSpace = flowLayout.sectionInset.left
-        + flowLayout.sectionInset.right
-        + (flowLayout.minimumInteritemSpacing * CGFloat(noOfCellsInRow - 1)) // interItemSpacing will always be n - 1
+        let noOfItemsInRow = dimension  //number of column you want according to total count
         
-        let size = Int((collectionView.bounds.width - totalPaddingSpace) / CGFloat(noOfCellsInRow))
+        let cellSpacing = 8
+        
+        // total - left and right - item spacing divided by no of items in row
+        let size = Int((collectionView.frame.width - CGFloat((noOfItemsInRow - 1) * cellSpacing) - CGFloat(2 * cellSpacing) ) / CGFloat(noOfItemsInRow))
         return CGSize(width: size, height: size)
     }
     
